@@ -6,13 +6,17 @@ import { FileReader } from './fileReader/fileReader';
 import { StageOneHalf } from './fileReader/StageOneHalf';
 import { TYPES } from './types';
 import 'reflect-metadata';
+import { ILoggerService } from './logger/logger.interface';
 
 @injectable()
 export class App {
 	app: Express;
 	port: number;
 
-	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {
+	constructor(
+		@inject(TYPES.PrismaService) private prismaService: PrismaService,
+		@inject(TYPES.LoggerService) private logger: ILoggerService,
+	) {
 		this.app = express();
 		this.port = 8000;
 	}
@@ -26,13 +30,9 @@ export class App {
 	public async init(): Promise<void> {
 		await this.prismaService.connectDB();
 		this.app.listen(this.port);
-		console.log('server start');
+		this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
 	}
 }
-
-// const app = new App();
-// export const repository = new PrismaService();
-// repository.connectDB();
 
 // const data = app.fileReader();
 

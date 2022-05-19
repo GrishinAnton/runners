@@ -1,0 +1,30 @@
+import { UserModel } from '@prisma/client';
+import { inject, injectable } from 'inversify';
+import { PrismaService } from '../database/prisma.service';
+import { IUser } from '../fileReader/StageOneHalf';
+import { TYPES } from '../types';
+import 'reflect-metadata';
+import { IUserRepository } from './user.repositoty.interface';
+
+@injectable()
+export class UserRepository implements IUserRepository {
+	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
+	async create({ name, surname, birthday }: IUser): Promise<UserModel> {
+		return await this.prismaService.client.userModel.create({
+			data: {
+				name,
+				surname,
+				birthday,
+			},
+		});
+	}
+
+	async find({ name, surname }: Omit<IUser, 'birthday'>): Promise<UserModel | null> {
+		return await this.prismaService.client.userModel.findFirst({
+			where: {
+				name,
+				surname,
+			},
+		});
+	}
+}

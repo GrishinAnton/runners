@@ -11,8 +11,24 @@ datasource db {
 }
 
 model UserModel {
-    id       Int    @id @default(autoincrement())
-    name     String
-    surname     String
-    birthday     String
+    id            Int    @id @default(autoincrement())
+    name          String 
+    surname       String 
+    birthday      String
+
+    @@unique([name, surname])
+}
+
+model CompetitionModel {
+  id              Int @id @default(autoincrement())
+  name            String @unique()
+  stages StageModel[]
+}
+
+model StageModel {
+  id Int @id @default(autoincrement())
+  name String
+  date String
+  competition CompetitionModel @relation(fields: [competitionId], references: [id])
+  competitionId Int
 }

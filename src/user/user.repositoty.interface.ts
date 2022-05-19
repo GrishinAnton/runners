@@ -1,7 +1,7 @@
 import { UserModel } from '@prisma/client';
-import { IUser } from '../fileReader/StageOneHalf';
+import { User } from './user.entity';
 
 export interface IUserRepository {
-	create: ({ name, surname, birthday }: IUser) => Promise<UserModel>;
-	find: ({ name, surname }: Omit<IUser, 'birthday'>) => Promise<UserModel | null>;
+	create: ({ name, surname, birthday }: User) => Promise<UserModel>;
+	find: ({ name, surname }: Omit<User, 'birthday'>) => Promise<UserModel | null>;
 }

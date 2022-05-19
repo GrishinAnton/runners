@@ -1,3 +1,4 @@
+import { User } from '../user/user.entity';
 import { IFileReaderRows } from './fileReader';
 
 interface IStageOneHalf {
@@ -14,12 +15,6 @@ const defaultCollect = {
 	[ECollect.MAN]: [],
 	[ECollect.WOMEN]: [],
 };
-
-export interface IUser {
-	name: string;
-	surname: string;
-	birthday: string;
-}
 
 export class StageOneHalf {
 	rows: IFileReaderRows['row'];
@@ -71,12 +66,13 @@ export class StageOneHalf {
 		});
 	}
 
-	getRunner(runner: string[]): IUser | null {
-		const result: IUser = {
+	getRunner(runner: string[]): User | null {
+		const defaultUser = {
 			name: '',
 			surname: '',
 			birthday: '',
 		};
+		const result: User = new User(defaultUser.name, defaultUser.surname, defaultUser.birthday);
 		if (runner.length) {
 			try {
 				result['name'] = runner[1].split(' ')[1] || '';

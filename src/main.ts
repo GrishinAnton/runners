@@ -7,6 +7,10 @@ import { ICompetitionService } from './competition/competition.service.interface
 import { PrismaService } from './database/prisma.service';
 import { ILoggerService } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
+import { StageController } from './stage/stage.controller';
+import { IStageController } from './stage/stage.controller.interace';
+import { StageService } from './stage/stage.service';
+import { IStageService } from './stage/stage.service.interface';
 import { TYPES } from './types';
 
 export interface IBootstrapReturn {
@@ -19,6 +23,8 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
 	bind<ICompetitionController>(TYPES.CompetitionController).to(CompetitionController);
 	bind<ICompetitionService>(TYPES.CompetitionService).to(CompetitionService);
+	bind<IStageController>(TYPES.StageController).to(StageController);
+	bind<IStageService>(TYPES.StageService).to(StageService);
 	bind<ILoggerService>(TYPES.LoggerService).to(LoggerService).inSingletonScope();
 });
 

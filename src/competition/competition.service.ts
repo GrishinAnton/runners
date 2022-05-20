@@ -16,7 +16,7 @@ export class CompetitionService implements ICompetitionService {
 
 		const existedCompetition = await this.prismaService.client.competitionModel.findFirst({
 			where: {
-				name,
+				name: competition.name,
 			},
 		});
 

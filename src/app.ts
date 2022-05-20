@@ -10,6 +10,7 @@ import { TYPES } from './types';
 import 'reflect-metadata';
 import { ILoggerService } from './logger/logger.interface';
 import { CompetitionController } from './competition/competition.controller';
+import { StageController } from './stage/stage.controller';
 
 @injectable()
 export class App {
@@ -21,6 +22,7 @@ export class App {
 		@inject(TYPES.PrismaService) private prismaService: PrismaService,
 		@inject(TYPES.LoggerService) private logger: ILoggerService,
 		@inject(TYPES.CompetitionController) private competitionController: CompetitionController,
+		@inject(TYPES.StageController) private stageController: StageController,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -32,6 +34,7 @@ export class App {
 
 	useRoutes(): void {
 		this.app.use('/competition', this.competitionController.router);
+		this.app.use('/stage', this.stageController.router);
 	}
 
 	// fileReader() {

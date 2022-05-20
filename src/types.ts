@@ -4,4 +4,6 @@ export const TYPES = {
 	LoggerService: Symbol.for('LoggerService'),
 	CompetitionController: Symbol.for('CompetitionController'),
 	CompetitionService: Symbol.for('CompetitionService'),
+	StageController: Symbol.for('StageController'),
+	StageService: Symbol.for('StageService'),
 };

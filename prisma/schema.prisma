@@ -32,7 +32,7 @@ model StageModel {
 	name String
 	date String
 
-	competition CompetitionModel @relation(fields: [competitionId], references: [id])
+	competition CompetitionModel? @relation(fields: [competitionId], references: [id])
 	competitionId Int
 
 	distance DistanceModel[]

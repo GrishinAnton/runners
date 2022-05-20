@@ -2,33 +2,52 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+	provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+	provider = "sqlite"
+	url      = "file:./dev.db"
 }
 
 model UserModel {
-    id            Int    @id @default(autoincrement())
-    name          String 
-    surname       String 
-    birthday      String
+	id	Int	@id @default(autoincrement())
+	name	String 
+	surname	String 
+	birthday	String
 
-    @@unique([name, surname])
+	distance DistanceModel[]
+
+	@@unique([name, surname])
 }
 
 model CompetitionModel {
-  id              Int @id @default(autoincrement())
-  name            String @unique()
-  stages StageModel[]
+	id	Int @id @default(autoincrement())
+	name	String @unique()
+	stages StageModel[]
 }
 
 model StageModel {
-  id Int @id @default(autoincrement())
-  name String
-  date String
-  competition CompetitionModel @relation(fields: [competitionId], references: [id])
-  competitionId Int
+	id Int @id @default(autoincrement())
+	name String
+	date String
+
+	competition CompetitionModel @relation(fields: [competitionId], references: [id])
+	competitionId Int
+
+	distance DistanceModel[]
+}
+
+model DistanceModel {
+	id Int @id @default(autoincrement())
+	time Int
+	date String
+	distance Int
+	temp Int
+
+	stage StageModel? @relation(fields: [stageId], references: [id])
+	stageId Int?
+
+	user UserModel @relation(fields: [userId], references: [id])
+	userId Int
 }

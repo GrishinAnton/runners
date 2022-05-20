@@ -14,7 +14,7 @@ model UserModel {
 	id	Int	@id @default(autoincrement())
 	name	String 
 	surname	String 
-	birthday	String
+	birthday	DateTime
 
 	distance DistanceModel[]
 
@@ -30,7 +30,7 @@ model CompetitionModel {
 model StageModel {
 	id Int @id @default(autoincrement())
 	name String
-	date String
+	date DateTime @default(now())
 
 	competition CompetitionModel? @relation(fields: [competitionId], references: [id])
 	competitionId Int
@@ -41,7 +41,7 @@ model StageModel {
 model DistanceModel {
 	id Int @id @default(autoincrement())
 	time Int
-	date String
+	date DateTime @default(now())
 	distance Int
 	temp Int
 

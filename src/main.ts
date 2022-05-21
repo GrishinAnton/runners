@@ -12,6 +12,10 @@ import { IStageController } from './stage/stage.controller.interace';
 import { StageService } from './stage/stage.service';
 import { IStageService } from './stage/stage.service.interface';
 import { TYPES } from './types';
+import { UserController } from './user/user.controller';
+import { IUserController } from './user/user.controller.interface';
+import { UserService } from './user/user.service';
+import { IUserService } from './user/user.service.interface';
 
 export interface IBootstrapReturn {
 	appContainer: Container;
@@ -25,6 +29,8 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ICompetitionService>(TYPES.CompetitionService).to(CompetitionService);
 	bind<IStageController>(TYPES.StageController).to(StageController);
 	bind<IStageService>(TYPES.StageService).to(StageService);
+	bind<IUserController>(TYPES.UserController).to(UserController);
+	bind<IUserService>(TYPES.UserService).to(UserService);
 	bind<ILoggerService>(TYPES.LoggerService).to(LoggerService).inSingletonScope();
 });
 

@@ -45,7 +45,6 @@ export class CompetitionController extends BaseController implements ICompetitio
 
 	async getCompetition(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
 		const result = await this.competitionService.getCompetition();
-		console.log(result);
 		this.ok(res, result);
 	}
 }

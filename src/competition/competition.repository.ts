@@ -10,7 +10,7 @@ import { Competition } from './competition.entity';
 export class CompetitionRepository implements ICompetitionRepository {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async create({ name }: Competition): Promise<CompetitionModel> {
+	async createCompetition({ name }: Competition): Promise<CompetitionModel> {
 		return await this.prismaService.client.competitionModel.create({
 			data: {
 				name,

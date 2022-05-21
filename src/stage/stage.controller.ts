@@ -20,21 +20,31 @@ export class StageController extends BaseController implements IStageController 
 			{
 				path: '/create',
 				method: 'post',
-				func: this.create,
+				func: this.createStage,
+			},
+			{
+				path: '/',
+				method: 'get',
+				func: this.getStage,
 			},
 		]);
 	}
 
-	async create(
+	async createStage(
 		{ body }: Request<{}, {}, StageCreateDto>,
 		res: Response,
 		next: NextFunction,
 	): Promise<void | Error> {
-		const result = await this.stageService.create(body);
+		const result = await this.stageService.createStage(body);
 		if (!result) {
 			this.send(res, 422, 'Такой этап уже существует');
 			return;
 		}
+		this.ok(res, result);
+	}
+
+	async getStage(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
+		const result = await this.stageService.getStage();
 		this.ok(res, result);
 	}
 }

@@ -20,21 +20,32 @@ export class CompetitionController extends BaseController implements ICompetitio
 			{
 				path: '/create',
 				method: 'post',
-				func: this.create,
+				func: this.createCompetition,
+			},
+			{
+				path: '/',
+				method: 'get',
+				func: this.getCompetition,
 			},
 		]);
 	}
 
-	async create(
+	async createCompetition(
 		{ body }: Request<{}, {}, CompetitionCreateDto>,
 		res: Response,
 		next: NextFunction,
 	): Promise<void | Error> {
-		const result = await this.competitionService.create(body);
+		const result = await this.competitionService.createCompetition(body);
 		if (!result) {
 			this.send(res, 422, 'Такое соревнование уже существует');
 			return;
 		}
+		this.ok(res, result);
+	}
+
+	async getCompetition(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
+		const result = await this.competitionService.getCompetition();
+		console.log(result);
 		this.ok(res, result);
 	}
 }

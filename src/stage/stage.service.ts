@@ -11,7 +11,7 @@ import { IStageService } from './stage.service.interface';
 export class StageService implements IStageService {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async create({ name, date, competitionId }: StageCreateDto): Promise<StageModel | null> {
+	async createStage({ name, date, competitionId }: StageCreateDto): Promise<StageModel | null> {
 		const stage = new Stage(name, date);
 
 		const existedCompetition = await this.prismaService.client.stageModel.findFirst({
@@ -31,5 +31,9 @@ export class StageService implements IStageService {
 				competitionId,
 			},
 		});
+	}
+
+	async getStage(): Promise<StageModel[] | null> {
+		return await this.prismaService.client.stageModel.findMany();
 	}
 }

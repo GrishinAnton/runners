@@ -11,7 +11,7 @@ import 'reflect-metadata';
 export class CompetitionService implements ICompetitionService {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async create({ name }: CompetitionCreateDto): Promise<CompetitionModel | null> {
+	async createCompetition({ name }: CompetitionCreateDto): Promise<CompetitionModel | null> {
 		const competition = new Competition(name);
 
 		const existedCompetition = await this.prismaService.client.competitionModel.findFirst({
@@ -27,6 +27,14 @@ export class CompetitionService implements ICompetitionService {
 		return this.prismaService.client.competitionModel.create({
 			data: {
 				name: competition.name,
+			},
+		});
+	}
+
+	async getCompetition(): Promise<CompetitionModel[] | null> {
+		return await this.prismaService.client.competitionModel.findMany({
+			include: {
+				stages: true,
 			},
 		});
 	}

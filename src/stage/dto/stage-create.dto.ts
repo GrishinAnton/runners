@@ -1,5 +1,5 @@
 export class StageCreateDto {
 	name: string;
-	date: string;
+	date: Date;
 	competitionId: number;
 }

@@ -14,4 +14,7 @@ export const TYPES = {
 	DistanceRepository: Symbol.for('DistanceRepository'),
 	DistanceController: Symbol.for('DistanceController'),
 	DistanceService: Symbol.for('DistanceService'),
+	RaceController: Symbol.for('RaceController'),
+	RaceService: Symbol.for('RaceService'),
+	FileReaderService: Symbol.for('FileReaderService'),
 };

@@ -2,10 +2,7 @@ import express, { Express } from 'express';
 import { inject, injectable } from 'inversify';
 import { json } from 'body-parser';
 import { Server } from 'http';
-import { resolve } from 'path';
 import { PrismaService } from './database/prisma.service';
-import { FileReader } from './fileReader/fileReader';
-import { StageOneHalf } from './fileReader/StageOneHalf';
 import { TYPES } from './types';
 import 'reflect-metadata';
 import { ILoggerService } from './logger/logger.interface';
@@ -13,6 +10,7 @@ import { CompetitionController } from './competition/competition.controller';
 import { StageController } from './stage/stage.controller';
 import { UserController } from './user/user.controller';
 import { DistanceController } from './distance/distance.controller';
+import { RaceController } from './race/race.controller';
 
 @injectable()
 export class App {
@@ -27,6 +25,7 @@ export class App {
 		@inject(TYPES.StageController) private stageController: StageController,
 		@inject(TYPES.UserController) private userController: UserController,
 		@inject(TYPES.DistanceController) private distanceController: DistanceController,
+		@inject(TYPES.RaceController) private raceController: RaceController,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -41,13 +40,8 @@ export class App {
 		this.app.use('/stage', this.stageController.router);
 		this.app.use('/user', this.userController.router);
 		this.app.use('/distance', this.distanceController.router);
+		this.app.use('/race', this.raceController.router);
 	}
-
-	// fileReader() {
-	// 	const file = resolve('./') + '/protocol8abs.xlsx';
-	// 	const fileReader = new FileReader(file);
-	// 	return fileReader.getData();
-	// }
 
 	public async init(): Promise<void> {
 		this.useMiddleware();
@@ -61,17 +55,3 @@ export class App {
 		this.server.close();
 	}
 }
-
-// const data = app.fileReader();
-
-// const stageReader = new StageOneHalf(data);
-// stageReader.chank();
-// stageReader.clearEmpty();
-// stageReader.collect();
-// const user = stageReader.getRunner(stageReader.collectObj.man[0] as string[]);
-
-// const userRepository = new UserRepository();
-// const userer = userRepository.create(user!).then((res) => console.log(res));
-// const finder = userRepository
-// 	.find({ name: 'Филипп', surname: 'Шинкин' })
-// 	.then((res) => console.log(res));

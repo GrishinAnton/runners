@@ -1,5 +1,6 @@
 import { Container, ContainerModule, interfaces } from 'inversify';
 import { App } from './app';
+import { FileReaderService } from './common/fileReader/fileReader.service';
 import { CompetitionController } from './competition/competition.controller';
 import { ICompetitionController } from './competition/competition.controller.interface';
 import { CompetitionRepository } from './competition/competition.repository';
@@ -15,6 +16,10 @@ import { DistanceService } from './distance/distance.service';
 import { IDistanceService } from './distance/distance.service.interface';
 import { ILoggerService } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
+import { RaceController } from './race/race.controller';
+import { IRaceController } from './race/race.controller.interface';
+import { RaceService } from './race/race.service';
+import { IRaceService } from './race/race.service.interface';
 import { StageController } from './stage/stage.controller';
 import { IStageController } from './stage/stage.controller.interace';
 import { StageRepository } from './stage/stage.repository';
@@ -37,6 +42,7 @@ export interface IBootstrapReturn {
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<App>(TYPES.Application).to(App);
 	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
+	bind<ILoggerService>(TYPES.LoggerService).to(LoggerService).inSingletonScope();
 	bind<ICompetitionController>(TYPES.CompetitionController).to(CompetitionController);
 	bind<ICompetitionService>(TYPES.CompetitionService).to(CompetitionService);
 	bind<ICompetitionRepository>(TYPES.CompetitionRepository).to(CompetitionRepository);
@@ -49,8 +55,9 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IDistanceController>(TYPES.DistanceController).to(DistanceController);
 	bind<IDistanceService>(TYPES.DistanceService).to(DistanceService);
 	bind<IDistanceRepository>(TYPES.DistanceRepository).to(DistanceRepository);
-
-	bind<ILoggerService>(TYPES.LoggerService).to(LoggerService).inSingletonScope();
+	bind<IRaceController>(TYPES.RaceController).to(RaceController);
+	bind<IRaceService>(TYPES.RaceService).to(RaceService);
+	bind<FileReaderService>(TYPES.FileReaderService).to(FileReaderService);
 });
 
 async function bootstrap(): Promise<IBootstrapReturn> {

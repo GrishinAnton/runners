@@ -1,5 +1,6 @@
 export class UserCreateDto {
 	name: string;
 	surname: string;
-	birthday: Date;
+	birthday: string;
+	gender: string;
 }

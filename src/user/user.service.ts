@@ -5,29 +5,30 @@ import 'reflect-metadata';
 import { UserCreateDto } from './dto/user-create.dto';
 import { User } from './user.entity';
 import { IUserService } from './user.service.interface';
+import { IUserRepository } from './user.repositoty.interface';
 
 @injectable()
 export class UserService implements IUserService {
-	constructor(@inject(TYPES.UserRepository) private userService: IUserService) {}
+	constructor(@inject(TYPES.UserRepository) private userRepository: IUserRepository) {}
 
-	async createUser({ name, surname, birthday }: UserCreateDto): Promise<UserModel | null> {
-		const user = new User(name, surname, birthday);
+	async createUser({ name, surname, birthday, gender }: UserCreateDto): Promise<UserModel | null> {
+		const user = new User(name, surname, birthday, gender);
 
-		const existedCompetition = await this.userService.getUser(user);
+		const existedCompetition = await this.userRepository.findBy(user);
 
 		if (existedCompetition) {
 			return null;
 		}
 
-		return this.userService.createUser(user);
+		return this.userRepository.create(user);
 	}
 
 	async getUser({ name, surname, birthday }: UserCreateDto): Promise<UserModel | null> {
-		const user = new User(name, surname, birthday);
-		return await this.userService.getUser(user);
+		const user = new User(name, surname, birthday, 'male');
+		return await this.userRepository.findBy(user);
 	}
 
 	async getUsers(): Promise<UserModel[] | null> {
-		return await this.userService.getUsers();
+		return await this.userRepository.get();
 	}
 }

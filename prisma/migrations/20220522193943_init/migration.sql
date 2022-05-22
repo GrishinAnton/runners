@@ -3,7 +3,8 @@ CREATE TABLE "UserModel" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
-    "birthday" DATETIME NOT NULL
+    "birthday" DATETIME NOT NULL,
+    "gender" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -24,10 +25,10 @@ CREATE TABLE "StageModel" (
 -- CreateTable
 CREATE TABLE "DistanceModel" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "time" INTEGER NOT NULL,
+    "time" TEXT NOT NULL,
     "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "distance" INTEGER NOT NULL,
-    "temp" INTEGER NOT NULL,
+    "temp" TEXT NOT NULL,
     "stageId" INTEGER,
     "userId" INTEGER NOT NULL,
     CONSTRAINT "DistanceModel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "UserModel" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -35,7 +36,7 @@ CREATE TABLE "DistanceModel" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "UserModel_name_surname_key" ON "UserModel"("name", "surname");
+CREATE UNIQUE INDEX "UserModel_name_surname_birthday_key" ON "UserModel"("name", "surname", "birthday");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CompetitionModel_name_key" ON "CompetitionModel"("name");

@@ -1,7 +1,8 @@
 export class DistanceCreateDto {
-	time: number;
-	date: Date;
+	time: string;
+	date: string;
 	distance: number;
-	temp: number;
+	temp: string;
 	userId: number;
+	stageId?: number;
 }

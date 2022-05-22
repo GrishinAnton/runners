@@ -10,10 +10,26 @@ import { Competition } from './competition.entity';
 export class CompetitionRepository implements ICompetitionRepository {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async createCompetition({ name }: Competition): Promise<CompetitionModel> {
+	async create({ name }: Competition): Promise<CompetitionModel> {
 		return await this.prismaService.client.competitionModel.create({
 			data: {
 				name,
+			},
+		});
+	}
+
+	async findBy({ name }: Competition): Promise<CompetitionModel | null> {
+		return await this.prismaService.client.competitionModel.findFirst({
+			where: {
+				name,
+			},
+		});
+	}
+
+	async get(): Promise<CompetitionModel[]> {
+		return await this.prismaService.client.competitionModel.findMany({
+			include: {
+				stages: true,
 			},
 		});
 	}

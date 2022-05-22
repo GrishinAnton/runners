@@ -10,8 +10,7 @@ import 'reflect-metadata';
 export class StageRepository implements IStageRepository {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async create({ name, date }: Stage): Promise<StageModel> {
-		const competitionId = 1;
+	async create({ name, date, competitionId }: Stage): Promise<StageModel> {
 		return await this.prismaService.client.stageModel.create({
 			data: {
 				name,
@@ -19,5 +18,17 @@ export class StageRepository implements IStageRepository {
 				competitionId,
 			},
 		});
+	}
+
+	async findBy({ name }: Stage): Promise<StageModel | null> {
+		return await this.prismaService.client.stageModel.findFirst({
+			where: {
+				name,
+			},
+		});
+	}
+
+	async get(): Promise<StageModel[] | null> {
+		return await this.prismaService.client.stageModel.findMany();
 	}
 }

@@ -1,5 +1,5 @@
 export class Stage {
-	constructor(private _name: string, private _date: Date) {}
+	constructor(private _name: string, private _date: Date, private _competitionId: number) {}
 
 	get name(): string {
 		return this._name;
@@ -7,5 +7,9 @@ export class Stage {
 
 	get date(): Date {
 		return this._date;
+	}
+
+	get competitionId(): number {
+		return this._competitionId;
 	}
 }

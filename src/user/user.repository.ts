@@ -9,7 +9,7 @@ import { User } from './user.entity';
 @injectable()
 export class UserRepository implements IUserRepository {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
-	async createUser({ name, surname, birthday }: User): Promise<UserModel> {
+	async create({ name, surname, birthday }: User): Promise<UserModel> {
 		return await this.prismaService.client.userModel.create({
 			data: {
 				name,
@@ -19,12 +19,19 @@ export class UserRepository implements IUserRepository {
 		});
 	}
 
-	async findUser({ name, surname }: Omit<User, 'birthday'>): Promise<UserModel | null> {
-		return await this.prismaService.client.userModel.findFirst({
+	async findBy({ name, surname, birthday }: User): Promise<UserModel | null> {
+		return await this.prismaService.client.userModel.findUnique({
 			where: {
-				name,
-				surname,
+				name_surname_birthday: {
+					name,
+					surname,
+					birthday,
+				},
 			},
 		});
+	}
+
+	async get(): Promise<UserModel[] | null> {
+		return await this.prismaService.client.userModel.findMany();
 	}
 }

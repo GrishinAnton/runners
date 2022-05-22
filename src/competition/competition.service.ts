@@ -1,41 +1,31 @@
 import { CompetitionModel } from '@prisma/client';
 import { inject, injectable } from 'inversify';
-import { PrismaService } from '../database/prisma.service';
 import { TYPES } from '../types';
 import { Competition } from './competition.entity';
 import { ICompetitionService } from './competition.service.interface';
 import { CompetitionCreateDto } from './dto/competition-create.dto';
 import 'reflect-metadata';
+import { ICompetitionRepository } from './competition.repository.interface';
 
 @injectable()
 export class CompetitionService implements ICompetitionService {
-	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
+	constructor(
+		@inject(TYPES.CompetitionRepository) private competitionRepository: ICompetitionRepository,
+	) {}
 
 	async createCompetition({ name }: CompetitionCreateDto): Promise<CompetitionModel | null> {
 		const competition = new Competition(name);
 
-		const existedCompetition = await this.prismaService.client.competitionModel.findFirst({
-			where: {
-				name: competition.name,
-			},
-		});
+		const existedCompetition = await this.competitionRepository.findBy(competition);
 
 		if (existedCompetition) {
 			return null;
 		}
 
-		return this.prismaService.client.competitionModel.create({
-			data: {
-				name: competition.name,
-			},
-		});
+		return this.competitionRepository.create(competition);
 	}
 
 	async getCompetition(): Promise<CompetitionModel[] | null> {
-		return await this.prismaService.client.competitionModel.findMany({
-			include: {
-				stages: true,
-			},
-		});
+		return await this.competitionRepository.get();
 	}
 }

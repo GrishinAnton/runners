@@ -2,6 +2,7 @@ import { UserModel } from '@prisma/client';
 import { User } from './user.entity';
 
 export interface IUserRepository {
-	createUser: ({ name, surname, birthday }: User) => Promise<UserModel>;
-	findUser: ({ name, surname }: Omit<User, 'birthday'>) => Promise<UserModel | null>;
+	create: ({ name, surname, birthday }: User) => Promise<UserModel>;
+	findBy: ({ name, surname, birthday }: User) => Promise<UserModel | null>;
+	get: () => Promise<UserModel[] | null>;
 }

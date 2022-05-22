@@ -1,7 +1,7 @@
 export class Distance {
 	constructor(
 		private _time: number,
-		private _date: string,
+		private _date: Date,
 		private _distance: number,
 		private _temp: number,
 	) {}
@@ -10,7 +10,7 @@ export class Distance {
 		return this._time;
 	}
 
-	get date(): string {
+	get date(): Date {
 		return this._date;
 	}
 

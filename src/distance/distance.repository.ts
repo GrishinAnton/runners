@@ -9,8 +9,7 @@ import 'reflect-metadata';
 export class DistanceRepository {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async create({ time, date, distance, temp }: Distance): Promise<DistanceModel> {
-		const userId = 1;
+	async create({ time, date, distance, temp, userId }: Distance): Promise<DistanceModel> {
 		return await this.prismaService.client.distanceModel.create({
 			data: {
 				time,
@@ -20,5 +19,9 @@ export class DistanceRepository {
 				userId,
 			},
 		});
+	}
+
+	async get(): Promise<DistanceModel[]> {
+		return await this.prismaService.client.distanceModel.findMany();
 	}
 }

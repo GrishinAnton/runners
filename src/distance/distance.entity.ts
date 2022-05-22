@@ -4,6 +4,7 @@ export class Distance {
 		private _date: Date,
 		private _distance: number,
 		private _temp: number,
+		private _userId: number,
 	) {}
 
 	get time(): number {
@@ -20,5 +21,9 @@ export class Distance {
 
 	get temp(): number {
 		return this._temp;
+	}
+
+	get userId(): number {
+		return this._userId;
 	}
 }

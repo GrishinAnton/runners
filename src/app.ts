@@ -12,6 +12,7 @@ import { ILoggerService } from './logger/logger.interface';
 import { CompetitionController } from './competition/competition.controller';
 import { StageController } from './stage/stage.controller';
 import { UserController } from './user/user.controller';
+import { DistanceController } from './distance/distance.controller';
 
 @injectable()
 export class App {
@@ -25,6 +26,7 @@ export class App {
 		@inject(TYPES.CompetitionController) private competitionController: CompetitionController,
 		@inject(TYPES.StageController) private stageController: StageController,
 		@inject(TYPES.UserController) private userController: UserController,
+		@inject(TYPES.DistanceController) private distanceController: DistanceController,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -38,6 +40,7 @@ export class App {
 		this.app.use('/competition', this.competitionController.router);
 		this.app.use('/stage', this.stageController.router);
 		this.app.use('/user', this.userController.router);
+		this.app.use('/distance', this.distanceController.router);
 	}
 
 	// fileReader() {

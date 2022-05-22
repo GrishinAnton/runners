@@ -7,6 +7,12 @@ import { ICompetitionRepository } from './competition/competition.repository.int
 import { CompetitionService } from './competition/competition.service';
 import { ICompetitionService } from './competition/competition.service.interface';
 import { PrismaService } from './database/prisma.service';
+import { DistanceController } from './distance/distance.controller';
+import { IDistanceController } from './distance/distance.controller.interface';
+import { DistanceRepository } from './distance/distance.repository';
+import { IDistanceRepository } from './distance/distance.repository.interface';
+import { DistanceService } from './distance/distance.service';
+import { IDistanceService } from './distance/distance.service.interface';
 import { ILoggerService } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
 import { StageController } from './stage/stage.controller';
@@ -40,6 +46,9 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IUserController>(TYPES.UserController).to(UserController);
 	bind<IUserService>(TYPES.UserService).to(UserService);
 	bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
+	bind<IDistanceController>(TYPES.DistanceController).to(DistanceController);
+	bind<IDistanceService>(TYPES.DistanceService).to(DistanceService);
+	bind<IDistanceRepository>(TYPES.DistanceRepository).to(DistanceRepository);
 
 	bind<ILoggerService>(TYPES.LoggerService).to(LoggerService).inSingletonScope();
 });
@@ -54,6 +63,3 @@ async function bootstrap(): Promise<IBootstrapReturn> {
 }
 
 export const boot = bootstrap();
-function UserReposotory(UserReposotory: any) {
-	throw new Error('Function not implemented.');
-}

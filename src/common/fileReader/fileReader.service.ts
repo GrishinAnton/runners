@@ -20,6 +20,7 @@ export class FileReaderService implements IFileReader {
 				rows.push(data[j]);
 			}
 		}
+
 		return rows;
 	}
 }

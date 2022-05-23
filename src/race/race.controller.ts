@@ -26,15 +26,20 @@ export class RaceController extends BaseController implements IRaceController {
 		]);
 	}
 
-	async createRaceFromFile(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
-		const file = resolve('./') + '/file/protocol8abs.xlsx';
+	async createRaceFromFile(
+		{ file, body }: Request<{}, {}, RaceCreateFromFileDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void | Error> {
+		const filePath = resolve('./') + `/${file?.path}`;
+
 		const result = await this.raceService.createRaceFromFile({
-			file,
-			stageId: 1,
-			date: new Date().toISOString(),
-			distance: 1500,
+			file: filePath,
+			stageId: Number(body.stageId),
+			date: body.date,
+			distance: Number(body.distance),
 		});
 
-		this.ok(res, result);
+		this.ok(res, 'Данные сохранены');
 	}
 }

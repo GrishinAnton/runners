@@ -11,6 +11,7 @@ import { StageController } from './stage/stage.controller';
 import { UserController } from './user/user.controller';
 import { DistanceController } from './distance/distance.controller';
 import { RaceController } from './race/race.controller';
+import { uploadMiddleware } from './common/fileUpload.service';
 
 @injectable()
 export class App {
@@ -33,6 +34,7 @@ export class App {
 
 	useMiddleware(): void {
 		this.app.use(json());
+		this.app.use(uploadMiddleware);
 	}
 
 	useRoutes(): void {

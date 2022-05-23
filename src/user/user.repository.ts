@@ -31,6 +31,10 @@ export class UserRepository implements IUserRepository {
 	}
 
 	async get(): Promise<UserModel[] | null> {
-		return await this.prismaService.client.userModel.findMany();
+		return await this.prismaService.client.userModel.findMany({
+			include: {
+				distance: true,
+			},
+		});
 	}
 }

@@ -1,6 +1,5 @@
 import { UserModel } from '@prisma/client';
 import { inject, injectable } from 'inversify';
-import { off } from 'process';
 import 'reflect-metadata';
 import { FileChanker } from '../common/fileReader/fileChanker.service';
 import { FileReaderService } from '../common/fileReader/fileReader.service';
@@ -29,15 +28,15 @@ export class RaceService implements IRaceService {
 		const data = this.fileReaderService.getData(file);
 		const collection = new FileChanker(data);
 		const collectionUsers = collection.getChankData();
-		const collectionUsersMan = collectionUsers.man;
-		const collectionUsersWomen = collectionUsers.women;
+		const collectionUsersMan = collectionUsers.women;
+		// const collectionUsersWomen = collectionUsers.women;
 
 		for (let i = 0; i < collectionUsersMan.length; i++) {
 			const user = collectionUsersMan[i];
 			const currentUser = collection.getRunner(user as string[]);
 			const currentDistance = collection.getDictance(user as string[]);
 			if (currentUser && currentDistance) {
-				const gender = 'male';
+				const gender = 'female';
 				const currentClassUser = new User(
 					currentUser.name,
 					currentUser.surname,
@@ -47,6 +46,7 @@ export class RaceService implements IRaceService {
 
 				let findingOrCreatedUser: UserModel;
 
+				//TODO Тут надо переделать на findOrCreate
 				const existedUser = await this.userService.getUser(currentClassUser);
 				if (existedUser) {
 					findingOrCreatedUser = existedUser;

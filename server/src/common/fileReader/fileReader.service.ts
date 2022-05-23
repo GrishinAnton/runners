@@ -39,23 +39,4 @@ export class FileReaderService implements IFileReader {
 //     }
 //     console.log("test.csv was saved in the current directory!");
 // });
-
-// fileReader() {
 // 	const file = resolve('./') + '/protocol8abs.xlsx';
-// 	const fileReader = new FileReader(file);
-// 	return fileReader.getData();
-// }
-
-// const data = app.fileReader();
-
-// const stageReader = new StageOneHalf(data);
-// stageReader.chank();
-// stageReader.clearEmpty();
-// stageReader.collect();
-// const user = stageReader.getRunner(stageReader.collectObj.man[0] as string[]);
-
-// const userRepository = new UserRepository();
-// const userer = userRepository.create(user!).then((res) => console.log(res));
-// const finder = userRepository
-// 	.find({ name: 'Филипп', surname: 'Шинкин' })
-// 	.then((res) => console.log(res));

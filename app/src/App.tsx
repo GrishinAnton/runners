@@ -1,12 +1,17 @@
 import React from 'react';
-import './App.css';
+import { BasicTable } from './components/pages/Home/Home';
+import Box from '@mui/material/Box';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-function App() {
-  return (
-    <div className="App">
-     test
-    </div>
-  );
-}
+const App = () => {
+	const queryClient = new QueryClient();
+	return (
+		<QueryClientProvider client={queryClient}>
+			<Box>
+				<BasicTable />
+			</Box>
+		</QueryClientProvider>
+	);
+};
 
 export default App;

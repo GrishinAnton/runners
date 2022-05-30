@@ -15,11 +15,10 @@ export class DistanceService implements IDistanceService {
 		time,
 		date,
 		distance,
-		temp,
 		userId,
 		stageId,
 	}: DistanceCreateDto): Promise<DistanceModel | null> {
-		const distanceEntity = new Distance(time, date, distance, temp, userId, stageId);
+		const distanceEntity = new Distance(time, date, distance, userId, stageId);
 		return this.distanceRepository.create(distanceEntity);
 	}
 

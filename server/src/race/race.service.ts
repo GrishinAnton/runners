@@ -58,7 +58,6 @@ export class RaceService implements IRaceService {
 					currentDistance.time,
 					date,
 					distance,
-					currentDistance.temp,
 					findingOrCreatedUser.id,
 					stageId,
 				);

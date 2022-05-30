@@ -56,10 +56,10 @@ export class FileChanker {
 	private collect(): void {
 		this.clearedChanks.forEach((chank, index) => {
 			if (index === 1) {
-				this.collectObj[ECollect.MAN] = chank.slice(1, chank.length - 1);
+				this.collectObj[ECollect.MAN] = chank.slice(1, chank.length);
 			}
 			if (index === 3) {
-				this.collectObj[ECollect.WOMEN] = chank.slice(1, chank.length - 2);
+				this.collectObj[ECollect.WOMEN] = chank.slice(1, chank.length - 1);
 			}
 		});
 	}
@@ -101,16 +101,13 @@ export class FileChanker {
 
 	getDictance(distance: string[]): {
 		time: string;
-		temp: string;
 	} | null {
 		const defaultDictance = {
 			time: '0',
-			temp: '0',
 		};
 		if (distance.length) {
 			try {
 				defaultDictance['time'] = distance[3] || '0';
-				defaultDictance['temp'] = distance[4] || '0';
 
 				return defaultDictance;
 			} catch (e) {

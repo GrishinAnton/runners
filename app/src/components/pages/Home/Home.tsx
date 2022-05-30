@@ -22,31 +22,24 @@ export const BasicTable = () => {
 	if (!data) return null;
 
 	return (
-		<>
-			<Box sx={{ padding: 4 }}>
-				<Typography sx={{ padding: 2 }} align="center">
-					Кубок школы "Бегом по жизни" по бегу на 1500м
-				</Typography>
-				<Box sx={{ padding: 4, maxWidth: 200 }}>
-					<FormControl fullWidth>
-						<Select
-							placeholder="Выберите этап"
-							labelId="stage"
-							value={stage}
-							onChange={handleChange}
-						>
-							<MenuItem value={'main'}>Главная</MenuItem>
-							<MenuItem value={'8'}>Этап 8</MenuItem>
-						</Select>
-					</FormControl>
-				</Box>
-				<Typography sx={{ mb: 1 }}>
-					{stage === 'main' ? 'Все участники соревнований' : 'Участники 8 этапа'}
-				</Typography>
-				<TableContainer>
-					{stage === 'main' ? <MainTable data={data} /> : <StageTable data={data} />}
-				</TableContainer>
+		<Box sx={{ padding: 4 }}>
+			<Typography sx={{ padding: 2 }} align="center">
+				Кубок школы "Бегом по жизни" по бегу на 1500м
+			</Typography>
+			<Box sx={{ padding: 4, maxWidth: 200 }}>
+				<FormControl fullWidth>
+					<Select placeholder="Выберите этап" labelId="stage" value={stage} onChange={handleChange}>
+						<MenuItem value={'main'}>Главная</MenuItem>
+						<MenuItem value={'8'}>Этап 8</MenuItem>
+					</Select>
+				</FormControl>
 			</Box>
-		</>
+			<Typography sx={{ mb: 1 }}>
+				{stage === 'main' ? 'Все участники соревнований' : 'Участники 8 этапа'}
+			</Typography>
+			<TableContainer>
+				{stage === 'main' ? <MainTable data={data} /> : <StageTable data={data} />}
+			</TableContainer>
+		</Box>
 	);
 };

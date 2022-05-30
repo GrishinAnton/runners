@@ -1,41 +1,52 @@
 import React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { User } from '../../../features/user/user.entity';
+import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { MainTable } from './MainTable';
+import { StageTable } from './StageTable';
 
 export const BasicTable = () => {
-	const { status, data, error, isFetching } = useQuery<unknown[]>(['user'], () =>
-		axios.get('/user').then((res) => res.data),
-	);
-	console.log(data, 'data');
+	const [stage, setStage] = React.useState('main');
+
+	const { data } = useQuery<User[]>(['user'], async () => {
+		const { data } = await axios.get('/users');
+		return data;
+	});
+
+	const handleChange = (event: SelectChangeEvent) => {
+		setStage(event.target.value as string);
+	};
+
+	if (!data) return null;
 
 	return (
-		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650 }} aria-label="simple table">
-				<TableHead>
-					<TableRow>
-						<TableCell align="right">Name</TableCell>
-						<TableCell align="right">Surname</TableCell>
-						<TableCell align="right">Birthday</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{data &&
-						data.map((row: any, index: number) => (
-							<TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-								<TableCell align="right">{row.name}</TableCell>
-								<TableCell align="right">{row.surname}</TableCell>
-								<TableCell align="right">{row.birthday}</TableCell>
-							</TableRow>
-						))}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<>
+			<Box sx={{ padding: 4 }}>
+				<Typography sx={{ padding: 2 }} align="center">
+					Кубок школы "Бегом по жизни" по бегу на 1500м
+				</Typography>
+				<Box sx={{ padding: 4, maxWidth: 200 }}>
+					<FormControl fullWidth>
+						<Select
+							placeholder="Выберите этап"
+							labelId="stage"
+							value={stage}
+							onChange={handleChange}
+						>
+							<MenuItem value={'main'}>Главная</MenuItem>
+							<MenuItem value={'8'}>Этап 8</MenuItem>
+						</Select>
+					</FormControl>
+				</Box>
+				<Typography sx={{ mb: 1 }}>
+					{stage === 'main' ? 'Все участники соревнований' : 'Участники 8 этапа'}
+				</Typography>
+				<TableContainer>
+					{stage === 'main' ? <MainTable data={data} /> : <StageTable data={data} />}
+				</TableContainer>
+			</Box>
+		</>
 	);
 };

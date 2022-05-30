@@ -17,7 +17,7 @@ export class DistanceService implements IDistanceService {
 		distance,
 		userId,
 		stageId,
-	}: DistanceCreateDto): Promise<DistanceModel | null> {
+	}: DistanceCreateDto): Promise<DistanceModel> {
 		const distanceEntity = new Distance(time, date, distance, userId, stageId);
 		return this.distanceRepository.create(distanceEntity);
 	}

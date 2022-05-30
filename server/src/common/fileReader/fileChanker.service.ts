@@ -7,14 +7,14 @@ interface IFileChanker {
 	collect: Record<ECollect, unknown[][]>;
 }
 
-enum ECollect {
-	MAN = 'man',
-	WOMEN = 'women',
+export enum ECollect {
+	MALE = 'male',
+	FEMALE = 'female',
 }
 
 const defaultCollect = {
-	[ECollect.MAN]: [],
-	[ECollect.WOMEN]: [],
+	[ECollect.MALE]: [],
+	[ECollect.FEMALE]: [],
 };
 
 export class FileChanker {
@@ -56,10 +56,10 @@ export class FileChanker {
 	private collect(): void {
 		this.clearedChanks.forEach((chank, index) => {
 			if (index === 1) {
-				this.collectObj[ECollect.MAN] = chank.slice(1, chank.length);
+				this.collectObj[ECollect.MALE] = chank.slice(1, chank.length);
 			}
 			if (index === 3) {
-				this.collectObj[ECollect.WOMEN] = chank.slice(1, chank.length - 1);
+				this.collectObj[ECollect.FEMALE] = chank.slice(1, chank.length - 1);
 			}
 		});
 	}
@@ -72,7 +72,7 @@ export class FileChanker {
 		return this.collectObj;
 	}
 
-	getRunner(runner: string[]): { name: string; surname: string; birthday: string } | null {
+	static getRunner(runner: string[]): { name: string; surname: string; birthday: string } | null {
 		const defaultUser = {
 			name: '',
 			surname: '',
@@ -99,7 +99,7 @@ export class FileChanker {
 		return null;
 	}
 
-	getDictance(distance: string[]): {
+	static getDictance(distance: string[]): {
 		time: string;
 	} | null {
 		const defaultDictance = {

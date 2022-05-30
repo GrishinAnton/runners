@@ -20,6 +20,14 @@ export class UserRepository implements IUserRepository {
 		});
 	}
 
+	async findOrCreate({ name, surname, birthday, gender }: User): Promise<UserModel> {
+		return await this.prismaService.client.userModel.upsert({
+			where: { name_surname_birthday: { name, surname, birthday } },
+			update: {},
+			create: { name, surname, birthday, gender },
+		});
+	}
+
 	async findBy({ name, surname, birthday }: User): Promise<UserModel | null> {
 		return await this.prismaService.client.userModel.findFirst({
 			where: {

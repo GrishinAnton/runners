@@ -23,6 +23,12 @@ export class UserService implements IUserService {
 		return this.userRepository.create(user);
 	}
 
+	async findOrCreateUser({ name, surname, birthday, gender }: UserCreateDto): Promise<UserModel> {
+		const user = new User(name, surname, birthday, gender);
+
+		return this.userRepository.findOrCreate(user);
+	}
+
 	async getUser({ name, surname, birthday }: UserCreateDto): Promise<UserModel | null> {
 		const user = new User(name, surname, birthday, 'male');
 		return await this.userRepository.findBy(user);

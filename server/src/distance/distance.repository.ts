@@ -4,6 +4,7 @@ import { PrismaService } from '../database/prisma.service';
 import { TYPES } from '../types';
 import { Distance } from './distance.entity';
 import 'reflect-metadata';
+import { IDistanceByStageId } from './distance.repository.interface';
 
 @injectable()
 export class DistanceRepository {
@@ -22,7 +23,22 @@ export class DistanceRepository {
 		});
 	}
 
-	async get(): Promise<DistanceModel[]> {
-		return await this.prismaService.client.distanceModel.findMany();
+	async getByStageId(stageId: number): Promise<IDistanceByStageId[] | null> {
+		return await this.prismaService.client.distanceModel.findMany({
+			where: {
+				stageId,
+			},
+			select: {
+				id: true,
+				time: true,
+				date: true,
+				distance: true,
+				temp: true,
+				user: true,
+			},
+			orderBy: {
+				time: 'asc',
+			},
+		});
 	}
 }

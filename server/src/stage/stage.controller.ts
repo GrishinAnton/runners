@@ -25,7 +25,12 @@ export class StageController extends BaseController implements IStageController 
 			{
 				path: '/',
 				method: 'get',
-				func: this.getStage,
+				func: this.getStages,
+			},
+			{
+				path: '/:id',
+				method: 'get',
+				func: this.getStageById,
 			},
 		]);
 	}
@@ -43,8 +48,22 @@ export class StageController extends BaseController implements IStageController 
 		this.ok(res, result);
 	}
 
-	async getStage(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
+	async getStages(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
 		const result = await this.stageService.getStage();
+		this.ok(res, result);
+	}
+
+	async getStageById(
+		{ params }: Request<{ id?: string }, {}, {}>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void | Error> {
+		const id = params.id;
+		if (!id) {
+			this.ok(res, 'Вы не передали id');
+			return;
+		}
+		const result = await this.stageService.getStageById(id);
 		this.ok(res, result);
 	}
 }

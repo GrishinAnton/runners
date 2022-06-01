@@ -10,18 +10,21 @@ import { Competition } from './competition.entity';
 export class CompetitionRepository implements ICompetitionRepository {
 	constructor(@inject(TYPES.PrismaService) private prismaService: PrismaService) {}
 
-	async create({ name }: Competition): Promise<CompetitionModel> {
+	async create({ name, startDate, endDate }: Competition): Promise<CompetitionModel> {
 		return await this.prismaService.client.competitionModel.create({
 			data: {
 				name,
+				startDate,
+				endDate,
 			},
 		});
 	}
 
-	async findBy({ name }: Competition): Promise<CompetitionModel | null> {
+	async findBy({ name, startDate }: Competition): Promise<CompetitionModel | null> {
 		return await this.prismaService.client.competitionModel.findFirst({
 			where: {
 				name,
+				startDate,
 			},
 		});
 	}

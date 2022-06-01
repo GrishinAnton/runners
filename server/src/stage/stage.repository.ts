@@ -31,4 +31,12 @@ export class StageRepository implements IStageRepository {
 	async get(): Promise<StageModel[] | null> {
 		return await this.prismaService.client.stageModel.findMany();
 	}
+
+	async getStageById(id: number): Promise<StageModel | null> {
+		return await this.prismaService.client.stageModel.findFirst({
+			where: {
+				id: id,
+			},
+		});
+	}
 }

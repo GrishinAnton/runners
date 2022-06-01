@@ -13,8 +13,12 @@ export class CompetitionService implements ICompetitionService {
 		@inject(TYPES.CompetitionRepository) private competitionRepository: ICompetitionRepository,
 	) {}
 
-	async createCompetition({ name }: CompetitionCreateDto): Promise<CompetitionModel | null> {
-		const competition = new Competition(name);
+	async createCompetition({
+		name,
+		startDate,
+		endDate,
+	}: CompetitionCreateDto): Promise<CompetitionModel | null> {
+		const competition = new Competition(name, startDate, endDate);
 
 		const existedCompetition = await this.competitionRepository.findBy(competition);
 

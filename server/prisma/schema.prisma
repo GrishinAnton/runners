@@ -29,8 +29,12 @@ model UserModel {
 
 model CompetitionModel {
 	id	Int @id @default(autoincrement())
-	name	String @unique()
+	name	String
+	startDate DateTime @default(now())
+	endDate DateTime?
 	stages StageModel[]
+
+	@@unique([name, startDate])
 }
 
 model StageModel {

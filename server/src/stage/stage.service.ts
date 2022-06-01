@@ -26,4 +26,8 @@ export class StageService implements IStageService {
 	async getStage(): Promise<StageModel[] | null> {
 		return await this.stageRepository.get();
 	}
+
+	async getStageById(id: string): Promise<StageModel | null> {
+		return await this.stageRepository.getStageById(Number(id));
+	}
 }

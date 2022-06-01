@@ -10,7 +10,9 @@ CREATE TABLE "UserModel" (
 -- CreateTable
 CREATE TABLE "CompetitionModel" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "name" TEXT NOT NULL
+    "name" TEXT NOT NULL,
+    "startDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "endDate" DATETIME
 );
 
 -- CreateTable
@@ -39,4 +41,4 @@ CREATE TABLE "DistanceModel" (
 CREATE UNIQUE INDEX "UserModel_name_surname_birthday_key" ON "UserModel"("name", "surname", "birthday");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "CompetitionModel_name_key" ON "CompetitionModel"("name");
+CREATE UNIQUE INDEX "CompetitionModel_name_startDate_key" ON "CompetitionModel"("name", "startDate");

@@ -40,8 +40,17 @@ export class DistanceController extends BaseController implements IDistanceContr
 		this.ok(res, result);
 	}
 
-	async getDistance(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
-		const result = await this.distanceService.getDistance();
+	async getDistance(
+		{ query }: Request<{}, {}, {}, { stageId?: string }>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void | Error> {
+		const stageId = query.stageId;
+		if (!stageId) {
+			this.ok(res, 'Вы не передали stageId');
+			return;
+		}
+		const result = await this.distanceService.getDistance(stageId);
 		this.ok(res, result);
 	}
 }

@@ -7,8 +7,10 @@ import {
 	TableCell,
 	tableCellClasses,
 } from '@mui/material';
+import axios from 'axios';
 import { format } from 'date-fns';
-import { User } from '../../../features/user/user.entity';
+import { useQuery } from 'react-query';
+import { IDistanceByStageId } from '../../../features/distance/distance.interfasce';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -34,28 +36,41 @@ const getAge = (date: string): number =>
 	Number(format(new Date(), 'yyyy')) - Number(format(new Date(date), 'yyyy'));
 
 interface IProps {
-	data: User[];
+	stageId: string;
 }
 
-export const StageTable: React.FC<IProps> = ({ data }) => (
-	<Table sx={{ minWidth: 650 }} aria-label="simple table">
-		<TableHead>
-			<TableRow>
-				<StyledTableCell>Участник</StyledTableCell>
-				<StyledTableCell align="right">Время</StyledTableCell>
-				<StyledTableCell align="right">Темп</StyledTableCell>
-				<StyledTableCell align="right">Возраст</StyledTableCell>
-			</TableRow>
-		</TableHead>
-		<TableBody>
-			{data.map((row, index: number) => (
-				<StyledTableRow key={index}>
-					<StyledTableCell>{`${row.surname} ${row.name}`}</StyledTableCell>
-					<StyledTableCell align="right">{row.distance[0].time}</StyledTableCell>
-					<StyledTableCell align="right">{row.distance[0].temp}</StyledTableCell>
-					<StyledTableCell align="right">{getAge(row.birthday)}</StyledTableCell>
-				</StyledTableRow>
-			))}
-		</TableBody>
-	</Table>
-);
+export const StageTable: React.FC<IProps> = ({ stageId }) => {
+	const { data: distanceData } = useQuery<IDistanceByStageId[]>([stageId], async () => {
+		const { data } = await axios.get('/distance', {
+			params: {
+				stageId,
+			},
+		});
+		return data;
+	});
+
+	if (!distanceData) return null;
+
+	return (
+		<Table sx={{ minWidth: 650 }} aria-label="simple table">
+			<TableHead>
+				<TableRow>
+					<StyledTableCell>Участник</StyledTableCell>
+					<StyledTableCell align="right">Время</StyledTableCell>
+					<StyledTableCell align="right">Темп</StyledTableCell>
+					<StyledTableCell align="right">Возраст</StyledTableCell>
+				</TableRow>
+			</TableHead>
+			<TableBody>
+				{distanceData.map((row, index: number) => (
+					<StyledTableRow key={index}>
+						<StyledTableCell>{`${row.user.surname} ${row.user.name}`}</StyledTableCell>
+						<StyledTableCell align="right">{row.time}</StyledTableCell>
+						<StyledTableCell align="right">{row.temp}</StyledTableCell>
+						<StyledTableCell align="right">{getAge(row.user.birthday)}</StyledTableCell>
+					</StyledTableRow>
+				))}
+			</TableBody>
+		</Table>
+	);
+};

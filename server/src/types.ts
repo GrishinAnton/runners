@@ -17,4 +17,7 @@ export const TYPES = {
 	RaceController: Symbol.for('RaceController'),
 	RaceService: Symbol.for('RaceService'),
 	FileReaderService: Symbol.for('FileReaderService'),
+	StatisticService: Symbol.for('StatisticService'),
+	StatisticRepository: Symbol.for('StatisticRepository'),
+	StatisticController: Symbol.for('StatisticController'),
 };

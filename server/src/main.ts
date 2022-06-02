@@ -26,6 +26,12 @@ import { StageRepository } from './stage/stage.repository';
 import { IStageRepository } from './stage/stage.repository.interface';
 import { StageService } from './stage/stage.service';
 import { IStageService } from './stage/stage.service.interface';
+import { StatisticController } from './statistic/statistic.controller';
+import { IStatisticController } from './statistic/statistic.controller.interface';
+import { StatisticRepository } from './statistic/statistic.repository';
+import { IStatisticRepository } from './statistic/statistic.repository.interface';
+import { StatisticService } from './statistic/statistic.service';
+import { IStatisticService } from './statistic/statistic.service.interface';
 import { TYPES } from './types';
 import { UserController } from './user/user.controller';
 import { IUserController } from './user/user.controller.interface';
@@ -58,6 +64,9 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IRaceController>(TYPES.RaceController).to(RaceController);
 	bind<IRaceService>(TYPES.RaceService).to(RaceService);
 	bind<FileReaderService>(TYPES.FileReaderService).to(FileReaderService);
+	bind<IStatisticService>(TYPES.StatisticService).to(StatisticService);
+	bind<IStatisticRepository>(TYPES.StatisticRepository).to(StatisticRepository);
+	bind<IStatisticController>(TYPES.StatisticController).to(StatisticController);
 });
 
 async function bootstrap(): Promise<IBootstrapReturn> {

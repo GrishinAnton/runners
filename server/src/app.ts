@@ -12,6 +12,7 @@ import { UserController } from './user/user.controller';
 import { DistanceController } from './distance/distance.controller';
 import { RaceController } from './race/race.controller';
 import { uploadMiddleware } from './common/fileUpload.service';
+import { StatisticController } from './statistic/statistic.controller';
 
 @injectable()
 export class App {
@@ -27,6 +28,7 @@ export class App {
 		@inject(TYPES.UserController) private userController: UserController,
 		@inject(TYPES.DistanceController) private distanceController: DistanceController,
 		@inject(TYPES.RaceController) private raceController: RaceController,
+		@inject(TYPES.StatisticController) private statisticController: StatisticController,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -43,6 +45,7 @@ export class App {
 		this.app.use('/users', this.userController.router);
 		this.app.use('/distance', this.distanceController.router);
 		this.app.use('/race', this.raceController.router);
+		this.app.use('/statistic', this.statisticController.router);
 	}
 
 	public async init(): Promise<void> {

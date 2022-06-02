@@ -1,9 +1,9 @@
-import { UserModel } from '@prisma/client';
+import { UserModel, Prisma } from '@prisma/client';
 import { inject, injectable } from 'inversify';
 import { PrismaService } from '../database/prisma.service';
 import { TYPES } from '../types';
 import 'reflect-metadata';
-import { IUserRepository } from './user.repositoty.interface';
+import { IUserRepository, IUserSort } from './user.repositoty.interface';
 import { User } from './user.entity';
 
 @injectable()
@@ -38,10 +38,12 @@ export class UserRepository implements IUserRepository {
 		});
 	}
 
-	async get(): Promise<UserModel[] | null> {
+	async get({ surnameSort, birthdaySort, genderSort }: IUserSort): Promise<UserModel[] | null> {
 		return await this.prismaService.client.userModel.findMany({
-			include: {
-				distance: true,
+			orderBy: {
+				surname: surnameSort,
+				birthday: birthdaySort,
+				gender: genderSort,
 			},
 		});
 	}

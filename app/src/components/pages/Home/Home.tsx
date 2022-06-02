@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TableContainer from '@mui/material/TableContainer';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { User } from '../../../features/user/user.entity';
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { MainTable } from './MainTable';
 import { StageTable } from './StageTable';
 import { ICompetition } from '../../../features/competition/competition.interface';
+import { IUser, IUserSort } from '../../../features/user/user.interface';
+import { ESortType } from '../../ui/SortButtonForTable/SortButtonForTable';
+import { UserSort } from '../../../features/user/sort.entity';
 
 export const BasicTable = () => {
-	const [stage, setStage] = React.useState('main');
+	const [stage, setStage] = useState('main');
 
-	const { data: userData } = useQuery<User[]>(['user'], async () => {
-		const { data } = await axios.get('/users');
-		return data;
-	});
 	const { data: competitonData } = useQuery<ICompetition>(['competition'], async () => {
 		const { data } = await axios.get('/competition');
 		return data[0];
@@ -24,7 +22,7 @@ export const BasicTable = () => {
 		setStage(event.target.value as string);
 	};
 
-	if (!userData || !competitonData) return null;
+	if (!competitonData) return null;
 
 	return (
 		<Box sx={{ padding: 4 }}>
@@ -44,11 +42,8 @@ export const BasicTable = () => {
 					</Select>
 				</FormControl>
 			</Box>
-			{/* <Typography sx={{ mb: 1 }}>
-				{stage === 'main' ? 'Все участники соревнования' : `Участники ${stage}`}
-			</Typography> */}
 			<TableContainer>
-				{stage === 'main' ? <MainTable data={userData} /> : <StageTable stageId={stage} />}
+				{stage === 'main' ? <MainTable /> : <StageTable stageId={stage} />}
 			</TableContainer>
 		</Box>
 	);

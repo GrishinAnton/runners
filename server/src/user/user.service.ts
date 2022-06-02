@@ -5,7 +5,7 @@ import 'reflect-metadata';
 import { UserCreateDto } from './dto/user-create.dto';
 import { User } from './user.entity';
 import { IUserService } from './user.service.interface';
-import { IUserRepository } from './user.repositoty.interface';
+import { IUserRepository, IUserSort } from './user.repositoty.interface';
 
 @injectable()
 export class UserService implements IUserService {
@@ -34,7 +34,11 @@ export class UserService implements IUserService {
 		return await this.userRepository.findBy(user);
 	}
 
-	async getUsers(): Promise<UserModel[] | null> {
-		return await this.userRepository.get();
+	async getUsers({
+		surnameSort,
+		birthdaySort,
+		genderSort,
+	}: IUserSort): Promise<UserModel[] | null> {
+		return await this.userRepository.get({ surnameSort, birthdaySort, genderSort });
 	}
 }

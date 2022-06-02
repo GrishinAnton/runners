@@ -10,29 +10,33 @@ const StyledLabelCell = styled(TableSortLabel)(() => ({
 	},
 }));
 
-export enum EOrder {
+export enum ESortType {
 	Asc = 'asc',
 	Desc = 'desc',
 }
 
 interface IProps {
-	onChangeDirection: (direction: EOrder) => void;
+	field?: string;
+	sortType?: ESortType;
+	onChangeDirection: (field: string, direction: ESortType) => void;
 }
 
 export const SortButtonForTable: React.FC<IProps & TableSortLabelProps> = ({
+	field = '',
+	sortType = ESortType.Asc,
 	children,
 	onChangeDirection,
 	...rest
 }) => {
-	const [order, setOrder] = useState<EOrder>(EOrder.Asc);
+	const [sort, setSort] = useState<ESortType>(sortType);
 
 	const handleChangeDirection = () => {
-		const currentDirection = order === EOrder.Asc ? EOrder.Desc : EOrder.Asc;
-		setOrder(currentDirection);
-		onChangeDirection(currentDirection);
+		const currentDirection = sort === ESortType.Asc ? ESortType.Desc : ESortType.Asc;
+		setSort(currentDirection);
+		onChangeDirection(field, currentDirection);
 	};
 	return (
-		<StyledLabelCell direction={order} onClick={handleChangeDirection} {...rest}>
+		<StyledLabelCell direction={sort} onClick={handleChangeDirection} {...rest}>
 			{children}
 		</StyledLabelCell>
 	);

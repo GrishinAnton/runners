@@ -7,6 +7,7 @@ import 'reflect-metadata';
 import { IUserService } from './user.service.interface';
 import { UserCreateDto } from './dto/user-create.dto';
 import { IUserController } from './user.controller.interface';
+import { IUserSort } from './user.repositoty.interface';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -57,8 +58,16 @@ export class UserController extends BaseController implements IUserController {
 		this.ok(res, result);
 	}
 
-	async getUsers(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
-		const result = await this.userService.getUsers();
+	async getUsers(
+		{ query }: Request<{}, {}, {}, IUserSort>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void | Error> {
+		const result = await this.userService.getUsers({
+			surnameSort: query.surnameSort,
+			birthdaySort: query.birthdaySort,
+			genderSort: query.genderSort,
+		});
 		this.ok(res, result);
 	}
 }

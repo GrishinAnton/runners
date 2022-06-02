@@ -1,12 +1,9 @@
-import { Distance } from '../distance/distance.entity';
-
 export class User {
 	constructor(
 		private _name: string,
 		private _surname: string,
 		private _birthday: string,
 		private _gender: string,
-		private _distance: Distance[],
 	) {}
 
 	get name(): string {
@@ -39,9 +36,5 @@ export class User {
 
 	set gender(value: string) {
 		this._gender = value;
-	}
-
-	get distance(): Distance[] {
-		return this._distance;
 	}
 }

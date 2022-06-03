@@ -1,8 +1,12 @@
-import { Prisma, StageModel } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { inject, injectable } from 'inversify';
 import { PrismaService } from '../database/prisma.service';
 import { TYPES } from '../types';
-import { IStatisticRepository } from './statistic.repository.interface';
+import {
+	ICompetitionStatistic,
+	IStatisticRepository,
+	TGender,
+} from './statistic.repository.interface';
 import 'reflect-metadata';
 
 @injectable()
@@ -30,7 +34,7 @@ export class StatisticRepository implements IStatisticRepository {
 			WHERE competitionId = ${competitonId}`,
 		);
 		const [male, female] = await this.prismaService.client.$queryRaw<
-			[{ genderCount: number; gender: string }, { genderCount: number; gender: string }]
+			[{ genderCount: number; gender: TGender }, { genderCount: number; gender: TGender }]
 		>(
 			Prisma.sql`SELECT DISTINCT COUNT(f.gender) OVER(PARTITION BY f.gender) as genderCount, f.gender
 			FROM (
@@ -51,7 +55,7 @@ export class StatisticRepository implements IStatisticRepository {
 		const [ageCampare] = await this.prismaService.client.$queryRaw<
 			[ICompetitionStatistic['ageCampare']]
 		>(
-			Prisma.sql`SELECT MIN(um.birthday) as oldest, MAX(um.birthday) as youngest
+			Prisma.sql`SELECT datetime(MIN(um.birthday) / 1000, 'unixepoch', 'localtime') as oldest, datetime(MAX(um.birthday) / 1000, 'unixepoch', 'localtime') as youngest
 			FROM CompetitionModel cm
 			INNER JOIN
 				StageModel sm ON cm.id = sm.competitionId
@@ -63,9 +67,21 @@ export class StatisticRepository implements IStatisticRepository {
 		);
 
 		const [tempCampare] = await this.prismaService.client.$queryRaw<
-			[{ fast: string; slow: string }]
+			[ICompetitionStatistic['tempCampare']]
 		>(
 			Prisma.sql`SELECT MIN(dm.temp) as fast, MAX(dm.temp) as slow
+			FROM CompetitionModel cm
+			INNER JOIN
+				StageModel sm ON cm.id = sm.competitionId
+			INNER JOIN
+			 DistanceModel dm ON sm.id = dm.stageId
+			WHERE competitionId = ${competitonId}`,
+		);
+
+		const [timeCampare] = await this.prismaService.client.$queryRaw<
+			[ICompetitionStatistic['timeCampare']]
+		>(
+			Prisma.sql`SELECT MIN(dm.time) as fast, MAX(dm.time) as slow
 			FROM CompetitionModel cm
 			INNER JOIN
 				StageModel sm ON cm.id = sm.competitionId
@@ -107,21 +123,9 @@ export class StatisticRepository implements IStatisticRepository {
 			},
 			ageCampare,
 			tempCampare,
+			timeCampare,
 			...distanceRun,
 			fastest,
 		};
 	}
-}
-
-export interface ICompetitionStatistic {
-	stageCount: number;
-	userCount: number;
-	sex: {
-		male: { genderCount: number; gender: string };
-		female: { genderCount: number; gender: string };
-	};
-	ageCampare: { oldest: number; youngest: number };
-	tempCampare: { fast: string; slow: string };
-	distanceRun: number;
-	fastest: { temp: string; time: string; name: string; surname: string };
 }

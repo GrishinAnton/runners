@@ -8,8 +8,8 @@ import {
 	tableCellClasses,
 } from '@mui/material';
 import axios from 'axios';
-import { format } from 'date-fns';
 import { useQuery } from 'react-query';
+import { getAge } from '../../../common/date';
 import { IDistanceByStageId } from '../../../features/distance/distance.interfasce';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -31,9 +31,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 		border: 0,
 	},
 }));
-
-const getAge = (date: string): number =>
-	Number(format(new Date(), 'yyyy')) - Number(format(new Date(date), 'yyyy'));
 
 interface IProps {
 	stageId: string;

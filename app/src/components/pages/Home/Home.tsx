@@ -6,9 +6,6 @@ import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Typography } fro
 import { MainTable } from './MainTable';
 import { StageTable } from './StageTable';
 import { ICompetition } from '../../../features/competition/competition.interface';
-import { IUser, IUserSort } from '../../../features/user/user.interface';
-import { ESortType } from '../../ui/SortButtonForTable/SortButtonForTable';
-import { UserSort } from '../../../features/user/sort.entity';
 
 export const BasicTable = () => {
 	const [stage, setStage] = useState('main');
@@ -42,8 +39,13 @@ export const BasicTable = () => {
 					</Select>
 				</FormControl>
 			</Box>
-			<TableContainer>
-				{stage === 'main' ? <MainTable /> : <StageTable stageId={stage} />}
+
+			<TableContainer sx={{ borderRadius: 1 }}>
+				{stage === 'main' ? (
+					<MainTable competitionId={competitonData?.id} />
+				) : (
+					<StageTable stageId={stage} />
+				)}
 			</TableContainer>
 		</Box>
 	);

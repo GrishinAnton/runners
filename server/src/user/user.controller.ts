@@ -67,6 +67,7 @@ export class UserController extends BaseController implements IUserController {
 			surnameSort: query.surnameSort,
 			birthdaySort: query.birthdaySort,
 			genderSort: query.genderSort,
+			searchValue: query.searchValue,
 		});
 		this.ok(res, result);
 	}

@@ -6,11 +6,16 @@ import {
 	styled,
 	TableCell,
 	tableCellClasses,
+	Box,
 } from '@mui/material';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { getAge, getTempFromSec, getTimeFromMilliseconds } from '../../../common/date';
-import { IDistanceByStageId } from '../../../features/distance/distance.interfasce';
+import {
+	EGender,
+	IDistanceByStageId,
+	IDistanceGender,
+} from '../../../features/distance/distance.interfasce';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -30,6 +35,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:last-child td, &:last-child th': {
 		border: 0,
 	},
+	'&:nth-of-type(1)': {
+		backgroundColor: '#ffc400',
+	},
+	'&:nth-of-type(2)': {
+		backgroundColor: 'silver',
+	},
+	'&:nth-of-type(3)': {
+		backgroundColor: '#CD7F32',
+	},
 }));
 
 interface IProps {
@@ -37,37 +51,76 @@ interface IProps {
 }
 
 export const StageTable: React.FC<IProps> = ({ stageId }) => {
-	const { data: distanceData } = useQuery<IDistanceByStageId[]>([stageId], async () => {
-		const { data } = await axios.get('/distance', {
-			params: {
-				stageId,
+	const { data: distanceData } = useQuery<IDistanceByStageId[], Error, IDistanceGender>(
+		[stageId],
+		async () => {
+			const { data } = await axios.get('/distance', {
+				params: {
+					stageId,
+				},
+			});
+			return data;
+		},
+		{
+			select: (data) => {
+				const genderData: IDistanceGender = {
+					[EGender.MALE]: [],
+					[EGender.FEMALE]: [],
+				};
+
+				data.forEach((distance) => {
+					genderData[distance.user.gender].push(distance);
+				});
+
+				return genderData;
 			},
-		});
-		return data;
-	});
+		},
+	);
 
 	if (!distanceData) return null;
 
 	return (
-		<Table sx={{ minWidth: 650 }} aria-label="simple table">
-			<TableHead>
-				<TableRow>
-					<StyledTableCell>Участник</StyledTableCell>
-					<StyledTableCell align="right">Время</StyledTableCell>
-					<StyledTableCell align="right">Темп</StyledTableCell>
-					<StyledTableCell align="right">Возраст</StyledTableCell>
-				</TableRow>
-			</TableHead>
-			<TableBody>
-				{distanceData.map((row, index: number) => (
-					<StyledTableRow key={index}>
-						<StyledTableCell>{`${row.user.surname} ${row.user.name}`}</StyledTableCell>
-						<StyledTableCell align="right">{getTimeFromMilliseconds(row.time)}</StyledTableCell>
-						<StyledTableCell align="right">{getTempFromSec(row.temp)}</StyledTableCell>
-						<StyledTableCell align="right">{getAge(row.user.birthday)}</StyledTableCell>
-					</StyledTableRow>
-				))}
-			</TableBody>
-		</Table>
+		<Box sx={{ display: 'flex', height: 950 }}>
+			<Table sx={{ minWidth: 535 }} aria-label="simple table">
+				<TableHead>
+					<TableRow>
+						<StyledTableCell>Участник</StyledTableCell>
+						<StyledTableCell align="right">Время</StyledTableCell>
+						<StyledTableCell align="right">Темп</StyledTableCell>
+						<StyledTableCell align="right">Возраст</StyledTableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{distanceData[EGender.MALE].map((row, index: number) => (
+						<StyledTableRow key={index}>
+							<StyledTableCell>{`${row.user.surname} ${row.user.name}`}</StyledTableCell>
+							<StyledTableCell align="right">{getTimeFromMilliseconds(row.time)}</StyledTableCell>
+							<StyledTableCell align="right">{getTempFromSec(row.temp)}</StyledTableCell>
+							<StyledTableCell align="right">{getAge(row.user.birthday)}</StyledTableCell>
+						</StyledTableRow>
+					))}
+				</TableBody>
+			</Table>
+			<Table sx={{ minWidth: 535 }} aria-label="simple table">
+				<TableHead>
+					<TableRow>
+						<StyledTableCell>Участник</StyledTableCell>
+						<StyledTableCell align="right">Время</StyledTableCell>
+						<StyledTableCell align="right">Темп</StyledTableCell>
+						<StyledTableCell align="right">Возраст</StyledTableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{distanceData[EGender.FEMALE].map((row, index: number) => (
+						<StyledTableRow key={index}>
+							<StyledTableCell>{`${row.user.surname} ${row.user.name}`}</StyledTableCell>
+							<StyledTableCell align="right">{getTimeFromMilliseconds(row.time)}</StyledTableCell>
+							<StyledTableCell align="right">{getTempFromSec(row.temp)}</StyledTableCell>
+							<StyledTableCell align="right">{getAge(row.user.birthday)}</StyledTableCell>
+						</StyledTableRow>
+					))}
+				</TableBody>
+			</Table>
+		</Box>
 	);
 };

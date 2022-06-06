@@ -38,7 +38,8 @@ export class UserService implements IUserService {
 		surnameSort,
 		birthdaySort,
 		genderSort,
+		searchValue,
 	}: IUserSort): Promise<UserModel[] | null> {
-		return await this.userRepository.get({ surnameSort, birthdaySort, genderSort });
+		return await this.userRepository.get({ surnameSort, birthdaySort, genderSort, searchValue });
 	}
 }

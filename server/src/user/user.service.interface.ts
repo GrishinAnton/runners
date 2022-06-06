@@ -6,5 +6,10 @@ export interface IUserService {
 	createUser: (dto: UserCreateDto) => Promise<UserModel | null>;
 	findOrCreateUser: (dto: UserCreateDto) => Promise<UserModel>;
 	getUser: (dto: UserCreateDto) => Promise<UserModel | null>;
-	getUsers: ({ surnameSort, birthdaySort, genderSort }: IUserSort) => Promise<UserModel[] | null>;
+	getUsers: ({
+		surnameSort,
+		birthdaySort,
+		genderSort,
+		searchValue,
+	}: IUserSort) => Promise<UserModel[] | null>;
 }

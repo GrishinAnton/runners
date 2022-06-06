@@ -8,3 +8,13 @@ export interface IDistanceByStageId {
 	temp: number;
 	user: IUser;
 }
+
+export enum EGender {
+	MALE = 'male',
+	FEMALE = 'female',
+}
+
+export interface IDistanceGender {
+	[EGender.MALE]: IDistanceByStageId[];
+	[EGender.FEMALE]: IDistanceByStageId[];
+}

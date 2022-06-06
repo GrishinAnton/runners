@@ -38,8 +38,18 @@ export class UserRepository implements IUserRepository {
 		});
 	}
 
-	async get({ surnameSort, birthdaySort, genderSort }: IUserSort): Promise<UserModel[] | null> {
+	async get({
+		surnameSort,
+		birthdaySort,
+		genderSort,
+		searchValue,
+	}: IUserSort): Promise<UserModel[] | null> {
 		return await this.prismaService.client.userModel.findMany({
+			where: {
+				surname: {
+					contains: searchValue,
+				},
+			},
 			orderBy: {
 				surname: surnameSort,
 				birthday: birthdaySort,

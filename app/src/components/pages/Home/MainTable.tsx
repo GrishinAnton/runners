@@ -45,13 +45,14 @@ const getGender = (gender: string) => (gender === 'male' ? 'М' : 'Ж');
 
 interface IProp {
 	competitionId: number | undefined;
+	searchValue?: string;
 }
 
-export const MainTable: React.FC<IProp> = ({ competitionId }) => {
+export const MainTable: React.FC<IProp> = ({ competitionId, searchValue = '' }) => {
 	const [sort, setSort] = useState<IUserSort>(sortEntity);
 
-	const { data: userData } = useQuery<IUser[]>(['user'], async () => {
-		const { data } = await axios.get('/users', { params: sort });
+	const { data: userData } = useQuery<IUser[]>(['user', searchValue], async () => {
+		const { data } = await axios.get('/users', { params: { searchValue } });
 		return data;
 	});
 

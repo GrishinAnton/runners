@@ -8,9 +8,9 @@ export interface IDistanceRepository {
 
 export interface IDistanceByStageId {
 	id: number;
-	time: string;
+	time: number;
 	date: Date;
 	distance: number;
-	temp: string;
+	temp: number;
 	user: UserModel;
 }

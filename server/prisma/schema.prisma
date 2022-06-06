@@ -50,10 +50,10 @@ model StageModel {
 
 model DistanceModel {
 	id Int @id @default(autoincrement())
-	time String
+	time Int
 	date DateTime @default(now())
 	distance Int
-	temp String
+	temp Int
 
 	stage StageModel? @relation(fields: [stageId], references: [id])
 	stageId Int?

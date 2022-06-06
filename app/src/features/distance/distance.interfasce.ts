@@ -2,9 +2,9 @@ import { IUser } from '../user/user.interface';
 
 export interface IDistanceByStageId {
 	id: number;
-	time: string;
+	time: number;
 	date: Date;
 	distance: number;
-	temp: string;
+	temp: number;
 	user: IUser;
 }

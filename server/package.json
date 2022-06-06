@@ -7,7 +7,7 @@
     "dev": "nodemon",
     "build": "tsc",
     "generate": "npx prisma generate",
-    "migrate": "npm prisma migrate dev"
+    "migrate": "npx prisma migrate dev"
   },
   "author": "",
   "license": "ISC",

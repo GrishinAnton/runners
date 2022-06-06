@@ -8,8 +8,8 @@ export interface ICompetitionStatistic {
 		female: { genderCount: number; gender: TGender };
 	};
 	ageCampare: { oldest: Date; youngest: Date };
-	tempCampare: { fast: string; slow: string };
-	timeCampare: { fast: string; slow: string };
+	tempCampare: { fast: number; slow: number };
+	timeCampare: { fast: number; slow: number };
 	distanceRun: number;
-	fastest: { temp: string; time: string; name: string; surname: string };
+	fastest: { temp: number; time: number; name: string; surname: string };
 }

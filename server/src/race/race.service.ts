@@ -5,6 +5,7 @@ import { ECollect, FileChanker } from '../common/fileReader/fileChanker.service'
 import { FileReaderService } from '../common/fileReader/fileReader.service';
 import { Distance } from '../distance/distance.entity';
 import { DistanceService } from '../distance/distance.service';
+import { DistanceCreateDto } from '../distance/dto/distance-create.dto';
 import { TYPES } from '../types';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
@@ -56,13 +57,13 @@ export class RaceService implements IRaceService {
 
 				const findingOrCreatedUser = await this.userService.findOrCreateUser(currentClassUser);
 
-				const distanceEntity = new Distance(
-					currentDistance.time,
+				const distanceEntity: DistanceCreateDto = {
+					time: currentDistance.time,
 					date,
 					distance,
-					findingOrCreatedUser.id,
+					userId: findingOrCreatedUser.id,
 					stageId,
-				);
+				};
 
 				await this.distanceService.createDistance(distanceEntity);
 			}

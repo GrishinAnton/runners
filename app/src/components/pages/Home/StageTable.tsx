@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { getAge } from '../../../common/date';
+import { getAge, getTempFromSec, getTimeFromMilliseconds } from '../../../common/date';
 import { IDistanceByStageId } from '../../../features/distance/distance.interfasce';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -62,8 +62,8 @@ export const StageTable: React.FC<IProps> = ({ stageId }) => {
 				{distanceData.map((row, index: number) => (
 					<StyledTableRow key={index}>
 						<StyledTableCell>{`${row.user.surname} ${row.user.name}`}</StyledTableCell>
-						<StyledTableCell align="right">{row.time}</StyledTableCell>
-						<StyledTableCell align="right">{row.temp}</StyledTableCell>
+						<StyledTableCell align="right">{getTimeFromMilliseconds(row.time)}</StyledTableCell>
+						<StyledTableCell align="right">{getTempFromSec(row.temp)}</StyledTableCell>
 						<StyledTableCell align="right">{getAge(row.user.birthday)}</StyledTableCell>
 					</StyledTableRow>
 				))}

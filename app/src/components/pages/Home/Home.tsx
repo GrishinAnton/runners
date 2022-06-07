@@ -17,7 +17,7 @@ import { ICompetition } from '../../../features/competition/competition.interfac
 import { useDebouncedCallback } from 'use-debounce';
 import { DEFAULT_DEBOUNCE_TIME } from '../../../features/config';
 
-export const BasicTable = () => {
+export const Home = () => {
 	const [stage, setStage] = useState('main');
 	const [searchValue, setSearchValue] = useState('');
 
@@ -59,11 +59,13 @@ export const BasicTable = () => {
 								))}
 						</Select>
 					</FormControl>
-					<TextField
-						label="Поиск по фамилии"
-						variant="outlined"
-						onChange={(e) => debounced(e.target.value)}
-					/>
+					{stage === 'main' ? (
+						<TextField
+							label="Поиск по фамилии"
+							variant="outlined"
+							onChange={(e) => debounced(e.target.value)}
+						/>
+					) : null}
 				</Box>
 			</Box>
 

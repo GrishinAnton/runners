@@ -41,8 +41,8 @@ export class App {
 
 	useRoutes(): void {
 		this.app.use('/competition', this.competitionController.router);
-		this.app.use('/stages', this.stageController.router);
-		this.app.use('/users', this.userController.router);
+		this.app.use('/stage', this.stageController.router);
+		this.app.use('/user', this.userController.router);
 		this.app.use('/distance', this.distanceController.router);
 		this.app.use('/race', this.raceController.router);
 		this.app.use('/statistic', this.statisticController.router);

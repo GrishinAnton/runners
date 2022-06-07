@@ -3,9 +3,9 @@ import { UserCreateDto } from './dto/user-create.dto';
 import { IUserSort } from './user.repositoty.interface';
 
 export interface IUserService {
-	createUser: (dto: UserCreateDto) => Promise<UserModel | null>;
+	// createUser: (dto: UserCreateDto) => Promise<UserModel | null>;
 	findOrCreateUser: (dto: UserCreateDto) => Promise<UserModel>;
-	getUser: (dto: UserCreateDto) => Promise<UserModel | null>;
+	getUser: ({ id }: { id?: number }) => Promise<UserModel | null>;
 	getUsers: ({
 		surnameSort,
 		birthdaySort,

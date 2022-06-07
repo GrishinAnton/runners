@@ -18,13 +18,13 @@ export class UserController extends BaseController implements IUserController {
 		super(logger);
 
 		this.bindRoutes([
+			// {
+			// 	path: '/create',
+			// 	method: 'post',
+			// 	func: this.createUser,
+			// },
 			{
-				path: '/create',
-				method: 'post',
-				func: this.createUser,
-			},
-			{
-				path: '/current',
+				path: '/:id',
 				method: 'get',
 				func: this.getUser,
 			},
@@ -36,25 +36,31 @@ export class UserController extends BaseController implements IUserController {
 		]);
 	}
 
-	async createUser(
-		{ body }: Request<{}, {}, UserCreateDto>,
-		res: Response,
-		next: NextFunction,
-	): Promise<void | Error> {
-		const result = await this.userService.createUser(body);
-		if (!result) {
-			this.send(res, 422, 'Такой юзер уже существует');
-			return;
-		}
-		this.ok(res, result);
-	}
+	// async createUser(
+	// 	{ body }: Request<{}, {}, UserCreateDto>,
+	// 	res: Response,
+	// 	next: NextFunction,
+	// ): Promise<void | Error> {
+	// 	const result = await this.userService.createUser(body);
+	// 	if (!result) {
+	// 		this.send(res, 422, 'Такой юзер уже существует');
+	// 		return;
+	// 	}
+	// 	this.ok(res, result);
+	// }
 
 	async getUser(
-		{ body }: Request<{}, {}, UserCreateDto>,
+		{ params }: Request<{ id?: string }, {}, {}>,
 		res: Response,
 		next: NextFunction,
 	): Promise<void | Error> {
-		const result = await this.userService.getUser(body);
+		const id = params.id;
+		if (!id) {
+			this.ok(res, 'Вы не передали id');
+			return;
+		}
+
+		const result = await this.userService.getUser({ id: Number(params.id) });
 		this.ok(res, result);
 	}
 

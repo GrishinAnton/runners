@@ -17,6 +17,8 @@ import { useQuery } from 'react-query';
 import { UserSort } from '../../../features/user/sort.entity';
 import { CompetitionStatistic } from '../../layouts/CompetitionStatistic/CompetitionStatistic';
 import { ICompetitionStatistic } from '../../../features/statistic/statistic.interface';
+import { NavLink } from 'react-router-dom';
+import { ERoutes } from '../../../routes/config';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -52,7 +54,7 @@ export const MainTable: React.FC<IProp> = ({ competitionId, searchValue = '' }) 
 	const [sort, setSort] = useState<IUserSort>(sortEntity);
 
 	const { data: userData } = useQuery<IUser[]>(['user', searchValue], async () => {
-		const { data } = await axios.get('/users', { params: { searchValue } });
+		const { data } = await axios.get('/user', { params: { searchValue } });
 		return data;
 	});
 
@@ -92,7 +94,9 @@ export const MainTable: React.FC<IProp> = ({ competitionId, searchValue = '' }) 
 					{userData &&
 						userData.map((row, index: number) => (
 							<StyledTableRow key={index}>
-								<StyledTableCell>{`${row.surname} ${row.name}`}</StyledTableCell>
+								<StyledTableCell>
+									<NavLink to={`${ERoutes.USER}/${row.id}`}>{`${row.surname} ${row.name}`}</NavLink>
+								</StyledTableCell>
 								<StyledTableCell align="center">
 									{format(new Date(row.birthday), 'dd.MM.yy')}
 								</StyledTableCell>

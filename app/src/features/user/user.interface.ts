@@ -2,6 +2,7 @@ import { ESortType } from '../../components/ui/SortButtonForTable/SortButtonForT
 import { EGender } from '../distance/distance.interfasce';
 
 export interface IUser {
+	id: number;
 	name: string;
 	surname: string;
 	birthday: string;

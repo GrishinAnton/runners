@@ -21,3 +21,5 @@ export const getTimeFromMilliseconds = (milliseconds: number): string => {
 
 	return `${Math.floor(min)}:${format}`;
 };
+
+export const getBirthdayFormat = (value: string) => format(new Date(value), 'dd.MM.yyyy');

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node dist/main.js",
-    "build": "npm install && npm run migrate && npm run generate && npx tsc",
+    "build": "npm install && npm run migrate && npm run generate",
     "generate": "npx prisma generate",
     "migrate": "npx prisma migrate dev --name init"
   },

@@ -49,7 +49,7 @@ let App = class App {
         this.raceController = raceController;
         this.statisticController = statisticController;
         this.app = (0, express_1.default)();
-        this.port = 8000;
+        this.port = Number(process.env.PORT) || 5000;
     }
     useMiddleware() {
         this.app.use((0, body_parser_1.json)());
@@ -69,6 +69,7 @@ let App = class App {
             this.useRoutes();
             yield this.prismaService.connectDB();
             this.app.listen(this.port);
+            this.logger.log('Test');
             this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
         });
     }

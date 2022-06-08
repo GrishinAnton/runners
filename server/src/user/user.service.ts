@@ -29,8 +29,8 @@ export class UserService implements IUserService {
 		return this.userRepository.findOrCreate(user);
 	}
 
-	async getUser({ id }: { id?: number }): Promise<UserModel | null> {
-		return await this.userRepository.findBy({ id });
+	async getUser({ userId }: { userId?: number }): Promise<UserModel | null> {
+		return await this.userRepository.findBy({ userId });
 	}
 
 	async getUsers({

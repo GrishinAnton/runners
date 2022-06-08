@@ -4,7 +4,7 @@ import { User } from './user.entity';
 export interface IUserRepository {
 	// create: ({ name, surname, birthday }: User) => Promise<UserModel>;
 	findOrCreate: ({ name, surname, birthday }: User) => Promise<UserModel>;
-	findBy: ({ id }: { id?: number }) => Promise<UserModel | null>;
+	findBy: ({ userId }: { userId?: number }) => Promise<UserModel | null>;
 	get: ({
 		surnameSort,
 		birthdaySort,

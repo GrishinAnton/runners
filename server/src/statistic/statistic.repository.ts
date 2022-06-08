@@ -5,6 +5,7 @@ import { TYPES } from '../types';
 import {
 	ICompetitionStatistic,
 	IStatisticRepository,
+	IUserStatistic,
 	TGender,
 } from './statistic.repository.interface';
 import 'reflect-metadata';
@@ -127,5 +128,17 @@ export class StatisticRepository implements IStatisticRepository {
 			...distanceRun,
 			fastest,
 		};
+	}
+	async getUserStatistic(userId: number): Promise<IUserStatistic[]> {
+		const result = await this.prismaService.client.$queryRaw<
+			IUserStatistic[]
+		>(Prisma.sql`SELECT sm.id as stageId, sm.name as stageName, dm.time as distanceTime, dm.temp as distanceTemp
+		FROM DistanceModel dm
+		INNER JOIN 
+			StageModel sm
+		INNER JOIN
+			CompetitionModel cm
+		WHERE userId = ${userId}`);
+		return result;
 	}
 }

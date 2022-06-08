@@ -18,7 +18,7 @@ datasource db {
 model UserModel {
 	id	Int	@id @default(autoincrement())
 	name	String 
-	surname	String 
+	surname	String  
 	birthday	DateTime
 	gender String //Поправить на enum потом. Sqlite не поддерживает male | female
 

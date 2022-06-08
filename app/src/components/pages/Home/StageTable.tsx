@@ -16,6 +16,8 @@ import {
 	IDistanceByStageId,
 	IDistanceGender,
 } from '../../../features/distance/distance.interfasce';
+import { ERoutes } from '../../../routes/config';
+import { NavLink } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -93,7 +95,11 @@ export const StageTable: React.FC<IProps> = ({ stageId }) => {
 				<TableBody>
 					{distanceData[EGender.MALE].map((row, index: number) => (
 						<StyledTableRow key={index}>
-							<StyledTableCell>{`${row.user.surname} ${row.user.name}`}</StyledTableCell>
+							<StyledTableCell>
+								<NavLink
+									to={`${ERoutes.USER}/${row.user.id}`}
+								>{`${row.user.surname} ${row.user.name}`}</NavLink>
+							</StyledTableCell>
 							<StyledTableCell align="right">{getTimeFromMilliseconds(row.time)}</StyledTableCell>
 							<StyledTableCell align="right">{getTempFromSec(row.temp)}</StyledTableCell>
 							<StyledTableCell align="right">{getAge(row.user.birthday)}</StyledTableCell>
@@ -113,7 +119,11 @@ export const StageTable: React.FC<IProps> = ({ stageId }) => {
 				<TableBody>
 					{distanceData[EGender.FEMALE].map((row, index: number) => (
 						<StyledTableRow key={index}>
-							<StyledTableCell>{`${row.user.surname} ${row.user.name}`}</StyledTableCell>
+							<StyledTableCell>
+								<NavLink
+									to={`${ERoutes.USER}/${row.user.id}`}
+								>{`${row.user.surname} ${row.user.name}`}</NavLink>
+							</StyledTableCell>
 							<StyledTableCell align="right">{getTimeFromMilliseconds(row.time)}</StyledTableCell>
 							<StyledTableCell align="right">{getTempFromSec(row.temp)}</StyledTableCell>
 							<StyledTableCell align="right">{getAge(row.user.birthday)}</StyledTableCell>

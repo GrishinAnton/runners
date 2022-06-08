@@ -28,10 +28,10 @@ export class UserRepository implements IUserRepository {
 		});
 	}
 
-	async findBy({ id }: { id?: number }): Promise<UserModel | null> {
+	async findBy({ userId }: { userId?: number }): Promise<UserModel | null> {
 		return await this.prismaService.client.userModel.findFirst({
 			where: {
-				id,
+				id: userId,
 			},
 		});
 	}

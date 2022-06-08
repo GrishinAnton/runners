@@ -60,7 +60,7 @@ export class UserController extends BaseController implements IUserController {
 			return;
 		}
 
-		const result = await this.userService.getUser({ id: Number(params.id) });
+		const result = await this.userService.getUser({ userId: Number(params.id) });
 		this.ok(res, result);
 	}
 

@@ -13,3 +13,10 @@ export interface ICompetitionStatistic {
 	distanceRun: number;
 	fastest: { temp: number; time: number; name: string; surname: string };
 }
+
+export interface IUserStatistic {
+	stageId: number;
+	stageName: string;
+	distanceTime: number;
+	distanceTemp: number;
+}

@@ -22,6 +22,11 @@ export class StatisticController extends BaseController implements IStatisticCon
 				method: 'get',
 				func: this.getCompetitionStatistic,
 			},
+			{
+				path: '/user/:id',
+				method: 'get',
+				func: this.getUserStatistic,
+			},
 		]);
 	}
 
@@ -37,6 +42,21 @@ export class StatisticController extends BaseController implements IStatisticCon
 		}
 
 		const result = await this.statisticService.getCompetitionStatistic(Number(id));
+		this.ok(res, result);
+	}
+
+	async getUserStatistic(
+		{ params }: Request<GetCompetitionStatisticDto, {}, {}>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void | Error> {
+		const id = params.id;
+		if (!id) {
+			this.ok(res, 'Вы не передали id');
+			return;
+		}
+
+		const result = await this.statisticService.getUserStatistic(Number(id));
 		this.ok(res, result);
 	}
 }

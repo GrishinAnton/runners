@@ -19,6 +19,7 @@ import { CompetitionStatistic } from '../../layouts/CompetitionStatistic/Competi
 import { ICompetitionStatistic } from '../../../features/statistic/statistic.interface';
 import { NavLink } from 'react-router-dom';
 import { ERoutes } from '../../../routes/config';
+import { getBirthdayFormat } from '../../../common/date';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -97,9 +98,7 @@ export const MainTable: React.FC<IProp> = ({ competitionId, searchValue = '' }) 
 								<StyledTableCell>
 									<NavLink to={`${ERoutes.USER}/${row.id}`}>{`${row.surname} ${row.name}`}</NavLink>
 								</StyledTableCell>
-								<StyledTableCell align="center">
-									{format(new Date(row.birthday), 'dd.MM.yy')}
-								</StyledTableCell>
+								<StyledTableCell align="center">{getBirthdayFormat(row.birthday)}</StyledTableCell>
 								<StyledTableCell align="center">{getGender(row.gender)}</StyledTableCell>
 							</StyledTableRow>
 						))}

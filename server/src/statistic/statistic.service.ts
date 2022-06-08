@@ -2,7 +2,11 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '../types';
 import { IStatisticService } from './statistic.service.interface';
 import 'reflect-metadata';
-import { ICompetitionStatistic, IStatisticRepository } from './statistic.repository.interface';
+import {
+	ICompetitionStatistic,
+	IStatisticRepository,
+	IUserStatistic,
+} from './statistic.repository.interface';
 
 @injectable()
 export class StatisticService implements IStatisticService {
@@ -12,5 +16,9 @@ export class StatisticService implements IStatisticService {
 
 	async getCompetitionStatistic(competitionId: number): Promise<ICompetitionStatistic> {
 		return await this.statisticRepository.getCompetitionStatistic(competitionId);
+	}
+
+	async getUserStatistic(userId: number): Promise<IUserStatistic[]> {
+		return await this.statisticRepository.getUserStatistic(userId);
 	}
 }

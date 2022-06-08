@@ -129,6 +129,7 @@ export class StatisticRepository implements IStatisticRepository {
 			fastest,
 		};
 	}
+
 	async getUserStatistic(userId: number): Promise<IUserStatistic[]> {
 		const result = await this.prismaService.client.$queryRaw<
 			IUserStatistic[]

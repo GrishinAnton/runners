@@ -1,17 +1,5 @@
-import {
-	Box,
-	Button,
-	styled,
-	Table,
-	TableBody,
-	TableCell,
-	tableCellClasses,
-	TableHead,
-	TableRow,
-	Typography,
-} from '@mui/material';
+import { Box, Button, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material';
 import axios from 'axios';
-import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -22,37 +10,18 @@ import {
 } from '../../../common/date';
 import { IUserStatistic } from '../../../features/statistic/statistic.interface';
 import { IUser } from '../../../features/user/user.interface';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-	[`&.${tableCellClasses.head}`]: {
-		backgroundColor: theme.palette.common.black,
-		color: theme.palette.common.white,
-	},
-	[`&.${tableCellClasses.body}`]: {
-		fontSize: 14,
-	},
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	'&:nth-of-type(odd)': {
-		backgroundColor: theme.palette.action.hover,
-	},
-	// hide last border
-	'&:last-child td, &:last-child th': {
-		border: 0,
-	},
-}));
+import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
 
 export const User = () => {
 	const params = useParams();
 	const navigate = useNavigate();
 
-	const { data: user } = useQuery<IUser>(['user'], async () => {
+	const { data: user } = useQuery<IUser>(['user', params.id], async () => {
 		const { data } = await axios.get(`/user/${params.id}`);
 		return data;
 	});
 
-	const { data: userStatistic } = useQuery<IUserStatistic[]>(['statistic'], async () => {
+	const { data: userStatistic } = useQuery<IUserStatistic[]>(['statistic', params.id], async () => {
 		const { data } = await axios.get(`/statistic/user/${params.id}`);
 		return data;
 	});

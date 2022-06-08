@@ -1,48 +1,18 @@
-import React, { useState } from 'react';
-import {
-	Table,
-	TableHead,
-	TableRow,
-	TableBody,
-	styled,
-	TableCell,
-	tableCellClasses,
-	Box,
-} from '@mui/material';
-import { format } from 'date-fns';
+import { useState } from 'react';
+import { Table, TableHead, TableRow, TableBody, Box } from '@mui/material';
 import { ESortType, SortButtonForTable } from '../../ui/SortButtonForTable/SortButtonForTable';
 import { IUser, IUserSort } from '../../../features/user/user.interface';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { UserSort } from '../../../features/user/sort.entity';
 import { CompetitionStatistic } from '../../layouts/CompetitionStatistic/CompetitionStatistic';
-import { ICompetitionStatistic } from '../../../features/statistic/statistic.interface';
 import { NavLink } from 'react-router-dom';
 import { ERoutes } from '../../../routes/config';
 import { getBirthdayFormat } from '../../../common/date';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-	[`&.${tableCellClasses.head}`]: {
-		backgroundColor: theme.palette.common.black,
-		color: theme.palette.common.white,
-	},
-	[`&.${tableCellClasses.body}`]: {
-		fontSize: 14,
-	},
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	'&:nth-of-type(odd)': {
-		backgroundColor: theme.palette.action.hover,
-	},
-	// hide last border
-	'&:last-child td, &:last-child th': {
-		border: 0,
-	},
-}));
+import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
+import { ICompetitionStatistic } from '../../../features/statistic/statistic.interface';
 
 const sortEntity = new UserSort(ESortType.Asc);
-console.log(sortEntity);
 
 const getGender = (gender: string) => (gender === 'male' ? 'М' : 'Ж');
 
@@ -74,7 +44,7 @@ export const MainTable: React.FC<IProp> = ({ competitionId, searchValue = '' }) 
 		console.log(direction);
 	};
 
-	if (!statisticData) return null;
+	if (!statisticData || !userData) return null;
 
 	return (
 		<Box sx={{ display: 'flex' }}>
@@ -92,16 +62,15 @@ export const MainTable: React.FC<IProp> = ({ competitionId, searchValue = '' }) 
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{userData &&
-						userData.map((row, index: number) => (
-							<StyledTableRow key={index}>
-								<StyledTableCell>
-									<NavLink to={`${ERoutes.USER}/${row.id}`}>{`${row.surname} ${row.name}`}</NavLink>
-								</StyledTableCell>
-								<StyledTableCell align="center">{getBirthdayFormat(row.birthday)}</StyledTableCell>
-								<StyledTableCell align="center">{getGender(row.gender)}</StyledTableCell>
-							</StyledTableRow>
-						))}
+					{userData.map((row, index: number) => (
+						<StyledTableRow key={index}>
+							<StyledTableCell>
+								<NavLink to={`${ERoutes.USER}/${row.id}`}>{`${row.surname} ${row.name}`}</NavLink>
+							</StyledTableCell>
+							<StyledTableCell align="center">{getBirthdayFormat(row.birthday)}</StyledTableCell>
+							<StyledTableCell align="center">{getGender(row.gender)}</StyledTableCell>
+						</StyledTableRow>
+					))}
 				</TableBody>
 			</Table>
 			<Box sx={{ minWidth: 200, borderRadius: 1 }}>

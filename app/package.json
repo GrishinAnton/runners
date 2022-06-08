@@ -22,11 +22,11 @@
     "use-debounce": "^8.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --optimize_for_size --max_old_space_size=920 --gc_interval=100 start",
+    "build": "react-scripts --optimize_for_size --max_old_space_size=920 --gc_interval=100 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "react-scripts build"
+    "postinstall": "react-scripts --optimize_for_size --max_old_space_size=920 --gc_interval=100 build"
   },
   "eslintConfig": {
     "extends": [

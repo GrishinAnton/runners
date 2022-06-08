@@ -2,10 +2,10 @@
   "name": "run",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "main.ts",
   "scripts": {
     "dev": "nodemon",
-    "start": "node dist/main.js",
+    "start": "node main.ts",
     "build": "npm install && npm run migrate && npm run generate && tsc",
     "generate": "npx prisma generate",
     "migrate": "npx prisma migrate dev --name init"

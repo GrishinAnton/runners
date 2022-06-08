@@ -2,7 +2,7 @@
   "name": "run",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "dist/main.js",
   "scripts": {
     "dev": "nodemon",
     "start": "npm install && npm run migrate && npm run generate && tsc",

@@ -133,13 +133,14 @@ export class StatisticRepository implements IStatisticRepository {
 	async getUserStatistic(userId: number): Promise<IUserStatistic[]> {
 		const result = await this.prismaService.client.$queryRaw<
 			IUserStatistic[]
-		>(Prisma.sql`SELECT sm.id as stageId, sm.name as stageName, dm.time as distanceTime, dm.temp as distanceTemp
+		>(Prisma.sql`SELECT sm.name as stageName, sm.id as stageId,   dm.time as distanceTime, dm.temp as distanceTemp
 		FROM DistanceModel dm
 		INNER JOIN 
-			StageModel sm
+			 StageModel sm ON dm.stageId = sm.id
 		INNER JOIN
-			CompetitionModel cm
-		WHERE userId = ${userId}`);
+			CompetitionModel cm ON sm.competitionId = cm.id
+		WHERE userId = ${userId}
+		ORDER BY stageId ASC;`);
 		return result;
 	}
 }

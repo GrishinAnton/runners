@@ -27,10 +27,10 @@ CREATE TABLE "StageModel" (
 -- CreateTable
 CREATE TABLE "DistanceModel" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "time" TEXT NOT NULL,
+    "time" INTEGER NOT NULL,
     "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "distance" INTEGER NOT NULL,
-    "temp" TEXT NOT NULL,
+    "temp" INTEGER NOT NULL,
     "stageId" INTEGER,
     "userId" INTEGER NOT NULL,
     CONSTRAINT "DistanceModel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "UserModel" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,

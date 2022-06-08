@@ -5,7 +5,6 @@
   "main": "src/main.ts",
   "scripts": {
     "dev": "nodemon",
-    "start": "node src/main.ts",
     "build": "npm install && npm run migrate && npm run generate && tsc",
     "generate": "npx prisma generate",
     "migrate": "npx prisma migrate dev --name init"

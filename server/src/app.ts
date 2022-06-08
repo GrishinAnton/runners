@@ -31,7 +31,7 @@ export class App {
 		@inject(TYPES.StatisticController) private statisticController: StatisticController,
 	) {
 		this.app = express();
-		this.port = 3000;
+		this.port = Number(process.env.PORT) || 8000;
 	}
 
 	useMiddleware(): void {

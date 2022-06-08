@@ -5,9 +5,9 @@
   "main": "main.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc",
+    "build": "npm install && npm run migrate && npm run generate && tsc && node dist/main.js",
     "generate": "npx prisma generate",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev --name init"
   },
   "author": "",
   "license": "ISC",

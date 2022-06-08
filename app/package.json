@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://runners.vercel.app",
   "dependencies": {
     "@amcharts/amcharts5": "^5.2.6",
     "@emotion/react": "^11.9.0",

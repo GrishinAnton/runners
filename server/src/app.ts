@@ -13,6 +13,7 @@ import { DistanceController } from './distance/distance.controller';
 import { RaceController } from './race/race.controller';
 import { uploadMiddleware } from './common/fileUpload.service';
 import { StatisticController } from './statistic/statistic.controller';
+import cors from 'cors';
 
 @injectable()
 export class App {
@@ -37,6 +38,7 @@ export class App {
 	useMiddleware(): void {
 		this.app.use(json());
 		this.app.use(uploadMiddleware);
+		this.app.use(cors());
 	}
 
 	useRoutes(): void {

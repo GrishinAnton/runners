@@ -6,4 +6,4 @@ node_modules
 /dist
 .vscode
 /file
-/uploads
+# /uploads

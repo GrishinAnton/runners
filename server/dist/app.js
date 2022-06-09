@@ -38,6 +38,7 @@ const distance_controller_1 = require("./distance/distance.controller");
 const race_controller_1 = require("./race/race.controller");
 const fileUpload_service_1 = require("./common/fileUpload.service");
 const statistic_controller_1 = require("./statistic/statistic.controller");
+const cors_1 = __importDefault(require("cors"));
 let App = class App {
     constructor(prismaService, logger, competitionController, stageController, userController, distanceController, raceController, statisticController) {
         this.prismaService = prismaService;
@@ -54,6 +55,7 @@ let App = class App {
     useMiddleware() {
         this.app.use((0, body_parser_1.json)());
         this.app.use(fileUpload_service_1.uploadMiddleware);
+        this.app.use((0, cors_1.default)());
     }
     useRoutes() {
         this.app.use('/competition', this.competitionController.router);

@@ -52,7 +52,11 @@ let StageRepository = class StageRepository {
     }
     get() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.prismaService.client.stageModel.findMany();
+            return yield this.prismaService.client.stageModel.findMany({
+                orderBy: {
+                    date: 'asc',
+                },
+            });
         });
     }
     getStageById(id) {

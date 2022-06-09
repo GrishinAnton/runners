@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 
 export const getAge = (date: string): number => {
 	const dateLocal = new Date(date).getTime();
-	return Number(format(dateLocal, 'yyyy')) - Number(format(dateLocal, 'yyyy'));
+	return Number(format(new Date(), 'yyyy')) - Number(format(parse('', '', dateLocal), 'yyyy'));
 };
 
 export const getTempFromSec = (temp: number): string => {
@@ -26,5 +26,5 @@ export const getTimeFromMilliseconds = (milliseconds: number): string => {
 
 export const getBirthdayFormat = (value: string) => {
 	const dateLocal = new Date(value).getTime();
-	return format(dateLocal, 'dd.MM.yyyy');
+	return format(parse('', '', dateLocal), 'dd.MM.yyyy');
 };

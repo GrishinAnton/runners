@@ -55,7 +55,6 @@ export class App {
 		this.useRoutes();
 		await this.prismaService.connectDB();
 		this.app.listen(this.port);
-		this.logger.log('Test');
 		this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
 	}
 

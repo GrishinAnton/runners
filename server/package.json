@@ -8,6 +8,7 @@
     "start": "node dist/main.js",
     "build": "npm install && npm run generate",
     "generate": "npx prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && npx tsc",
     "migrate": "npx prisma migrate dev --name init"
   },
   "author": "",

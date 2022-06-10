@@ -34,7 +34,13 @@ export const Home = () => {
 		setStage(event.target.value as string);
 	};
 
-	if (!competitonData) return null;
+	if (!competitonData) {
+		return (
+			<Typography sx={{ padding: 2 }} align="center">
+				Прибегайте позже
+			</Typography>
+		);
+	}
 
 	return (
 		<Box sx={{ padding: 4 }}>

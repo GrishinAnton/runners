@@ -44,7 +44,7 @@ export const MainTable: React.FC<IProp> = ({ competitionId, searchValue = '' }) 
 		console.log(direction);
 	};
 
-	if (!statisticData || !userData) return null;
+	if (!statisticData || !userData?.length) return null;
 
 	return (
 		<Box sx={{ display: 'flex' }}>

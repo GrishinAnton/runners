@@ -18,101 +18,103 @@ export class StatisticRepository implements IStatisticRepository {
 		const [stageCount] = await this.prismaService.client.$queryRaw<
 			[{ stageCount: ICompetitionStatistic['stageCount'] }]
 		>(
-			Prisma.sql`SELECT COUNT(*) as stageCount FROM StageModel WHERE competitionId = ${competitonId}`,
+			Prisma.sql`SELECT COUNT(*) as "stageCount" FROM stagemodel WHERE competitionid = ${competitonId};`,
 		);
 
 		const [userCount] = await this.prismaService.client.$queryRaw<
 			[{ userCount: ICompetitionStatistic['userCount'] }]
 		>(
-			Prisma.sql`SELECT COUNT(DISTINCT(userId)) as userCount
-			FROM CompetitionModel cm
+			Prisma.sql`SELECT COUNT(DISTINCT(userid)) as "userCount"
+			FROM competitionmodel cm
 				INNER JOIN
-				 StageModel sm ON cm.id = sm.competitionId
+				 stagemodel sm ON cm.id = sm.competitionid
 				INNER JOIN
-				 DistanceModel dm ON sm.id = dm.stageId
+				 distancemodel dm ON sm.id = dm.stageid
 				INNER JOIN
-					UserModel um ON dm.userId = um.id
-			WHERE competitionId = ${competitonId}`,
+					usermodel um ON dm.userid = um.id
+			WHERE competitionid = ${competitonId};`,
 		);
 		const [male, female] = await this.prismaService.client.$queryRaw<
 			[{ genderCount: number; gender: TGender }, { genderCount: number; gender: TGender }]
 		>(
-			Prisma.sql`SELECT DISTINCT COUNT(f.gender) OVER(PARTITION BY f.gender) as genderCount, f.gender
+			Prisma.sql`SELECT DISTINCT COUNT(f.gender) OVER(PARTITION BY f.gender) as "genderCount", f.gender
 			FROM (
 				SELECT um.id, um.gender
-				FROM CompetitionModel cm
+				FROM competitionmodel cm
 				INNER JOIN
-				 StageModel sm ON cm.id = sm.competitionId
+					stagemodel sm ON cm.id = sm.competitionid
 				INNER JOIN
-				 DistanceModel dm ON sm.id = dm.stageId
+					distancemodel dm ON sm.id = dm.stageid
 				INNER JOIN
-					UserModel um ON dm.userId = um.id
-				WHERE competitionId = ${competitonId}
+					usermodel um ON dm.userid = um.id
+				WHERE competitionid = ${competitonId}
 				GROUP BY um.id, um.gender
 			) as f
-			ORDER BY gender DESC`,
+			ORDER BY gender DESC;`,
 		);
 
 		const [ageCampare] = await this.prismaService.client.$queryRaw<
 			[ICompetitionStatistic['ageCampare']]
 		>(
-			Prisma.sql`SELECT datetime(MIN(um.birthday) / 1000, 'unixepoch', 'localtime') as oldest, datetime(MAX(um.birthday) / 1000, 'unixepoch', 'localtime') as youngest
-			FROM CompetitionModel cm
+			Prisma.sql`SELECT MIN(DATE(um.birthday)) as oldest, MAX(DATE(um.birthday)) as youngest
+			FROM competitionmodel cm
 			INNER JOIN
-				StageModel sm ON cm.id = sm.competitionId
+				stagemodel sm ON cm.id = sm.competitionid
 			INNER JOIN
-				DistanceModel dm ON sm.id = dm.stageId
+				distancemodel dm ON sm.id = dm.stageid
 			INNER JOIN
-				UserModel um
-			WHERE competitionId = ${competitonId}`,
+				usermodel um ON dm.userid = um.id
+			WHERE competitionid = ${competitonId};`,
 		);
 
 		const [tempCampare] = await this.prismaService.client.$queryRaw<
 			[ICompetitionStatistic['tempCampare']]
 		>(
 			Prisma.sql`SELECT MIN(dm.temp) as fast, MAX(dm.temp) as slow
-			FROM CompetitionModel cm
+			FROM competitionmodel cm
 			INNER JOIN
-				StageModel sm ON cm.id = sm.competitionId
+				stagemodel sm ON cm.id = sm.competitionid
 			INNER JOIN
-			 DistanceModel dm ON sm.id = dm.stageId
-			WHERE competitionId = ${competitonId}`,
+				distancemodel dm ON sm.id = dm.stageid
+			WHERE competitionid = ${competitonId};`,
 		);
 
 		const [timeCampare] = await this.prismaService.client.$queryRaw<
 			[ICompetitionStatistic['timeCampare']]
 		>(
 			Prisma.sql`SELECT MIN(dm.time) as fast, MAX(dm.time) as slow
-			FROM CompetitionModel cm
+			FROM competitionmodel cm
 			INNER JOIN
-				StageModel sm ON cm.id = sm.competitionId
+				stagemodel sm ON cm.id = sm.competitionid
 			INNER JOIN
-			 DistanceModel dm ON sm.id = dm.stageId
-			WHERE competitionId = ${competitonId}`,
+				distancemodel dm ON sm.id = dm.stageid
+			WHERE competitionid = ${competitonId};`,
 		);
 
 		const [distanceRun] = await this.prismaService.client.$queryRaw<
 			[{ distanceRun: ICompetitionStatistic['distanceRun'] }]
 		>(
-			Prisma.sql`SELECT SUM(dm.distance) as distanceRun
-			FROM CompetitionModel cm
+			Prisma.sql`SELECT SUM(dm.distance) as "distanceRun"
+			FROM competitionmodel cm
 			INNER JOIN
-				StageModel sm ON cm.id = sm.competitionId
+				stagemodel sm ON cm.id = sm.competitionid
 			INNER JOIN
-			 DistanceModel dm ON sm.id = dm.stageId
-			WHERE competitionId = ${competitonId}`,
+				distancemodel dm ON sm.id = dm.stageid
+			WHERE competitionid = ${competitonId};`,
 		);
 
 		const [fastest] = await this.prismaService.client.$queryRaw<[ICompetitionStatistic['fastest']]>(
 			Prisma.sql`SELECT MIN(dm.temp) as temp, dm.time, um.name, um.surname
-			FROM CompetitionModel cm
+			FROM competitionmodel cm
 			INNER JOIN
-				StageModel sm ON cm.id = sm.competitionId
+				stagemodel sm ON cm.id = sm.competitionid
 			INNER JOIN
-				DistanceModel dm ON sm.id = dm.stageId
+				distancemodel dm ON sm.id = dm.stageid
 			INNER JOIN
-				UserModel um ON dm.userId = um.id
-			WHERE competitionId = ${competitonId}`,
+				usermodel um ON dm.userid = um.id
+			WHERE competitionid = ${competitonId}
+			GROUP BY
+				temp, dm.time, um.name, um.surname;`,
 		);
 
 		return {
@@ -133,14 +135,14 @@ export class StatisticRepository implements IStatisticRepository {
 	async getUserStatistic(userId: number): Promise<IUserStatistic[]> {
 		const result = await this.prismaService.client.$queryRaw<
 			IUserStatistic[]
-		>(Prisma.sql`SELECT sm.name as stageName, sm.id as stageId,   dm.time as distanceTime, dm.temp as distanceTemp
-		FROM DistanceModel dm
+		>(Prisma.sql`SELECT sm.name as "stageName", sm.id as "stageId", dm.time as "distanceTime", dm.temp as "distanceTemp"
+		FROM distancemodel dm
 		INNER JOIN 
-			 StageModel sm ON dm.stageId = sm.id
+			stagemodel sm ON dm.stageid = sm.id
 		INNER JOIN
-			CompetitionModel cm ON sm.competitionId = cm.id
-		WHERE userId = ${userId}
-		ORDER BY stageId ASC;`);
+			competitionmodel cm ON sm.competitionid = cm.id
+		WHERE userid = ${userId}
+		ORDER BY stageid ASC;`);
 		return result;
 	}
 }

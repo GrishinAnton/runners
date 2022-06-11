@@ -37,7 +37,8 @@ export const Home = () => {
 	if (!competitonData) {
 		return (
 			<Typography sx={{ padding: 2 }} align="center">
-				Прибегайте позже
+				Бесплатный сервер не такой быстрый как бегуны БПЖ... Все работает, подождите 5-10 секунд, я
+				разгоняюсь... Потом буду бегать быстро.
 			</Typography>
 		);
 	}

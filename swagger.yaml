@@ -8,6 +8,10 @@ servers:
 tags:
 - name: "user"
   description: "Управление пользователями"
+- name: "statistic"
+  description: "Статистика"
+- name: "stage"
+  description: "Этапы"
 paths:
   /user:
     get:
@@ -31,13 +35,7 @@ paths:
       summary: "Получение юзера по id"
       operationId: "getUserById"
       parameters:
-        - name: id
-          in: path
-          description: User ID
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - $ref: '#/components/parameters/getId'
       responses:
         "200":
           description: Успешный ответ
@@ -45,8 +43,103 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  /statistic/user/{id}:
+    get:
+      tags:
+      - "statistic"
+      summary: "Получение статистики по пользователю"
+      operationId: "getUserStatistic"
+      parameters:
+        - $ref: '#/components/parameters/getId'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserStatistic'
+  /statistic/competition/{id}:
+    get:
+      tags:
+      - "statistic"
+      summary: "Получение статистики по соревнованию"
+      operationId: "getCompetitionStatistic"
+      parameters:
+        - $ref: '#/components/parameters/getId'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionStatistic'
+  /stage:
+    get:
+      tags:
+      - "stage"
+      summary: "Получение всех этапов"
+      operationId: "getStages"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stage'
+  /stage/{id}:
+    get:
+      tags:
+      - "stage"
+      summary: "Получение этапа по ID"
+      operationId: "getStageById"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stage'
+  /stage/create:
+    post:
+      tags:
+      - "stage"
+      summary: "Создание этапа"
+      operationId: "createStage"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStage'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stage'
+                  
+                  
 components:
+  parameters:
+    getId:
+      in: path
+      name: id
+      description: ID
+      required: true
+      schema:
+        type: integer
+        format: int64
   schemas:
+    Gender:
+      type: string
+      enum:
+        - male
+        - female
     User:
       type: object
       properties:
@@ -64,14 +157,178 @@ components:
           type: string
           example: "1999-10-16T00:00:00.000Z"
         gender:
-          type: "string"
-          enum: 
-            - "male"
-            - "female"
+          $ref: '#/components/schemas/Gender'
       required:
         - id
         - name
         - surname
         - birthday
         - gender
+    UserStatistic:
+      type: object
+      properties:
+        stageId:
+          type: integer
+          format: int64
+          example: 1
+        stageName:
+          type: string
+          example: 'Rulin'
+        distanceTime:
+          type: integer
+          format: int64
+          description: "Время в секундах"
+          example: 264010
+        distanceTemp:
+          type: integer
+          format: int64
+          description: "Темп в секундах на километр"
+          example: 176
+      required:
+        - stageId
+        - stageName
+        - distanceTime
+        - distanceTemp
+    CompetitionStatistic:
+      type: object
+      properties:
+        stageCount:
+          type: integer
+          format: int64
+          example: 1
+        userCount:
+          type: integer
+          format: int64
+          example: 1
+        sex: 
+          type: object
+          properties:
+            male:
+              type: object
+              properties:
+                genderCount:
+                  type: integer
+                  format: int64
+                  example: 1
+                gender:
+                  $ref: '#/components/schemas/Gender'
+            female:
+              type: object
+              properties:
+                genderCount:
+                  type: integer
+                  format: int64
+                  example: 1
+                gender:
+                  $ref: '#/components/schemas/Gender'
+        ageCampare:
+          type: object
+          properties:
+            oldest:
+              type: string
+              example: "1960-01-10"
+            youngest:
+              type: string
+              example: "1960-01-10"
+        tempCampare:
+          type: object
+          description: "Темп в секундах на километр"
+          properties:
+            fast: 
+              type: integer
+              format: int64
+              description: "Темп в секундах на километр"
+              example: 172
+            slow: 
+              type: integer
+              format: int64
+              description: "Темп в секундах на километр"
+              example: 258016
+        timeCampare:
+          type: object
+          description: "Время в секундах"
+          properties:
+            fast: 
+              type: integer
+              format: int64
+              description: "Время в секундах"
+              example: 258016
+            slow: 
+              type: integer
+              format: int64
+              description: "Время в секундах"
+              example: 660055
+        distanceRun:
+          type: integer
+          format: int64
+          description: "Кол-во пробеженных метров"
+          example: 510000
+        fastest:
+          type: object
+          description: "Время в секундах"
+          properties:
+            time: 
+              type: integer
+              format: int64
+              description: "Время в секундах"
+              example: 258016
+            temp: 
+              type: integer
+              format: int64
+              description: "Темп в секундах на километр"
+              example: 172
+            name:
+              type: string
+              example: 'Anton'
+            surname:
+              type: string
+              example: 'Rulin'
+      required:
+        - stageCount
+        - userCount
+        - sex
+        - ageCampare
+        - tempCampare
+        - timeCampare
+        - distanceRun
+        - fastest
+    Stage:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: 'Этап 2'
+        date:
+          type: string
+          example: "1999-10-16T00:00:00.000Z"
+        competitionId:
+          type: integer
+          format: int64
+          example: 1
+      required:
+        - id
+        - name
+        - date
+        - competitionId
+    CreateStage:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Этап 2'
+        date:
+          type: string
+          example: "1999-10-16T00:00:00.000Z"
+        competitionId:
+          type: integer
+          format: int64
+          example: 1
+      required:
+        - name
+        - date
+        - competitionId
 

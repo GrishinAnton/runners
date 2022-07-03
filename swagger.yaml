@@ -4,14 +4,20 @@ info:
   version: "1.0.0"
   title: "Swagger Run"
 servers:
-  - url: https://running-server-bpg.herokuapp.com
+  - url: http://localhost:5000
 tags:
 - name: "user"
   description: "Управление пользователями"
 - name: "statistic"
   description: "Статистика"
 - name: "stage"
-  description: "Этапы"
+  description: "Этапы Соревнований"
+- name: "competition"
+  description: "Соревнования"
+- name: "distance"
+  description: "Дистанция"
+- name: "race"
+  description: "Протокол соревнования"
 paths:
   /user:
     get:
@@ -122,7 +128,119 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Stage'
-                  
+  /competition/create:
+    post:
+      tags:
+      - "competition"
+      summary: "Создание соревнования"
+      operationId: "createCompetition"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Competition'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCompetition'
+  /competition:
+    get:
+      tags:
+      - "competition"
+      summary: "Получение соревнований"
+      operationId: "getCompetitions"
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCompetition'
+  /distance/create:
+    post:
+      tags:
+      - "distance"
+      summary: "Создание дистанции"
+      operationId: "createDistance"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Distance'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCreatedDistance'
+  /distance:
+    get:
+      tags:
+      - "distance"
+      summary: "Получение дистанций"
+      operationId: "getDistance"
+      parameters:
+        - in: query
+          name: stageId
+          description: ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetDistance'
+  /race/create-from-file:
+    post:
+      tags:
+      - "race"
+      summary: "Создание пользователей с дистанцией из файла соревнования"
+      operationId: "createRace"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                  format: binary
+                stageId: 
+                  type: integer
+                  format: int64
+                  example: 1
+                date: 
+                  type: string
+                  example: "1999-10-16T00:00:00.000Z"
+                distance: 
+                  type: integer
+                  format: int64
+                  example: 1
+              required:
+                - filename
+                - date
+                - distance
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCreatedDistance'
                   
 components:
   parameters:
@@ -331,4 +449,109 @@ components:
         - name
         - date
         - competitionId
-
+    Competition:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Кубок 2'
+        startDate:
+          type: string
+          example: "1999-10-16T00:00:00.000Z"
+        endDate:
+          type: string
+          example: "1999-10-16T00:00:00.000Z"
+      required:
+        - name
+        - startDate
+    GetCompetition:
+      allOf:     
+        - $ref: '#/components/schemas/Competition'
+      type: object
+      properties:
+        id:
+            type: integer
+            format: int64
+            example: 1
+      required:
+        - name
+        - startDate
+        - id
+    Distance:
+      type: object
+      properties:
+        time:
+          type: integer
+          format: int64
+          example: 1
+        date:
+          type: string
+          example: "1999-10-16T00:00:00.000Z"
+        distance:
+          type: integer
+          format: int64
+          example: 1
+        temp:
+          type: integer
+          format: int64
+          example: 1
+        stageId:
+          type: integer
+          format: int64
+          example: 1
+        userId:
+          type: integer
+          format: int64
+          example: 1
+      required:
+        - time
+        - date
+        - distance
+        - temp
+        - userId
+    GetCreatedDistance:
+      allOf:     
+        - $ref: '#/components/schemas/Distance'
+      type: object
+      properties:
+        id:
+            type: integer
+            format: int64
+            example: 1
+      required:
+        - time
+        - date
+        - distance
+        - temp
+        - userId
+        - id
+    GetDistance:
+      type: object
+      properties:
+        time:
+          type: integer
+          format: int64
+          example: 1
+        date:
+          type: string
+          example: "1999-10-16T00:00:00.000Z"
+        distance:
+          type: integer
+          format: int64
+          example: 1
+        temp:
+          type: integer
+          format: int64
+          example: 1
+        stageId:
+          type: integer
+          format: int64
+          example: 1
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+        - time
+        - date
+        - distance
+        - temp
+        - user

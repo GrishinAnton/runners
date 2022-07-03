@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "runners-api": "apps/runners-api",
+    "runners-front": "apps/runners-front",
+    "runners-front-e2e": "apps/runners-front-e2e"
+  }
+}

@@ -2,7 +2,6 @@
   "name": "app",
   "version": "0.1.0",
   "dependencies": {
-    "@amcharts/amcharts5": "^5.2.6",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.8.1",

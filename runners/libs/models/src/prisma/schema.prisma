@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+	provider = "prisma-client-js"
+}
+
+datasource db {
+	provider = "postgresql"
+	url      = env("DATABASE_URL")
+}
+
+// enum UserGender {
+// 	MALE
+// 	FEMALE 
+// }
+
+model UserModel {
+	id	Int	@id @default(autoincrement())
+	name	String 
+	surname	String  
+	birthday	DateTime
+	gender String //Поправить на enum потом. Sqlite не поддерживает male | female
+
+	distance DistanceModel[]
+
+	@@unique([name, surname, birthday])
+	@@map(name: "usermodel")
+}
+
+model CompetitionModel {
+	id	Int @id @default(autoincrement())
+	name	String
+	startDate DateTime @default(now()) @map(name: "startdate")
+	endDate DateTime? @map(name: "enddate")
+	stages StageModel[]
+
+	@@unique([name, startDate])
+	@@map(name: "competitionmodel")
+}
+
+model StageModel {
+	id Int @id @default(autoincrement())
+	name String
+	date DateTime @default(now())
+
+	competition CompetitionModel? @relation(fields: [competitionId], references: [id])
+	competitionId Int @map(name: "competitionid")
+
+	distance DistanceModel[]
+	@@map(name: "stagemodel")
+}
+
+model DistanceModel {
+	id Int @id @default(autoincrement())
+	time Int
+	date DateTime @default(now())
+	distance Int
+	temp Int
+
+	stage StageModel? @relation(fields: [stageId], references: [id])
+	stageId Int? @map(name: "stageid")
+
+	user UserModel @relation(fields: [userId], references: [id])
+	userId Int @map(name: "userid")
+
+	@@map(name: "distancemodel")
+}

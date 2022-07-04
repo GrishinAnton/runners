@@ -1,11 +1,11 @@
-export type TGender = 'male' | 'female';
+import { UserGender } from "@prisma/client";
 
 export interface ICompetitionStatistic {
 	stageCount: number;
 	userCount: number;
 	sex: {
-		male: { genderCount: number; gender: TGender };
-		female: { genderCount: number; gender: TGender };
+		male: { genderCount: number; gender: UserGender };
+		female: { genderCount: number; gender: UserGender };
 	};
 	ageCampare: { oldest: Date; youngest: Date };
 	tempCampare: { fast: number; slow: number };

@@ -3,11 +3,10 @@ import { inject, injectable } from 'inversify';
 import { PrismaService } from '../database/prisma.service';
 import { TYPES } from '../../types';
 import {
-	ICompetitionStatistic,
 	IStatisticRepository,
-	IUserStatistic,
-	TGender,
 } from './statistic.repository.interface';
+import {ICompetitionStatistic, IUserStatistic} from '@runners/shared/interfaces'
+import { UserGender } from "@prisma/client";
 import 'reflect-metadata';
 
 @injectable()
@@ -35,7 +34,7 @@ export class StatisticRepository implements IStatisticRepository {
 			WHERE competitionid = ${competitonId};`,
 		);
 		const [male, female] = await this.prismaService.client.$queryRaw<
-			[{ genderCount: number; gender: TGender }, { genderCount: number; gender: TGender }]
+			[{ genderCount: number; gender: UserGender }, { genderCount: number; gender: UserGender }]
 		>(
 			Prisma.sql`SELECT DISTINCT COUNT(f.gender) OVER(PARTITION BY f.gender) as "genderCount", f.gender
 			FROM (

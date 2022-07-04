@@ -6,10 +6,10 @@
       "root": "libs/models",
       "sourceRoot": "libs/models/src",
       "projectType": "library",
-      "schematics": {},
-      "architect": {
+      "generators": {},
+      "targets": {
         "migrate": {
-          "builder": "@nrwl/workspace:run-commands",
+          "executor": "@nrwl/workspace:run-commands",
           "outputs": [],
           "options": {
             "command": "npx prisma migrate dev --name init --schema ./src/prisma/schema.prisma",
@@ -17,7 +17,7 @@
           }
         },
         "gen-client": {
-          "builder": "@nrwl/workspace:run-commands",
+          "executor": "@nrwl/workspace:run-commands",
           "outputs": [],
           "options": {
             "command": "npx prisma generate --schema ./src/prisma/schema.prisma",
@@ -28,6 +28,29 @@
     },
     "runners-api": "apps/runners-api",
     "runners-front": "apps/runners-front",
-    "runners-front-e2e": "apps/runners-front-e2e"
+    "runners-front-e2e": "apps/runners-front-e2e",
+    "shared-interfaces": {
+      "root": "libs/shared/interfaces",
+      "sourceRoot": "libs/shared/interfaces/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/shared/interfaces/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/interfaces"],
+          "options": {
+            "jestConfig": "libs/shared/interfaces/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    }
   }
 }

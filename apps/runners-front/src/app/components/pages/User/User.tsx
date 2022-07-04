@@ -8,7 +8,7 @@ import {
 	getTempFromSec,
 	getTimeFromMilliseconds,
 } from '../../../common/date';
-import { IUserStatistic } from '../../../features/statistic/statistic.interface';
+import { IUserStatistic } from '@runners/shared/interfaces';
 import { IUser } from '../../../features/user/user.interface';
 import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
 

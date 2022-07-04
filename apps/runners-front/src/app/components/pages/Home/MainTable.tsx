@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 import { ERoutes } from '../../../routes/config';
 import { getBirthdayFormat } from '../../../common/date';
 import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
-import { ICompetitionStatistic } from '../../../features/statistic/statistic.interface';
+import { ICompetitionStatistic } from '@runners/shared/interfaces';
 
 const sortEntity = new UserSort(ESortType.Asc);
 

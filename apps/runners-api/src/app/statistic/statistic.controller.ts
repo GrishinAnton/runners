@@ -31,7 +31,7 @@ export class StatisticController extends BaseController implements IStatisticCon
 	}
 
 	async getCompetitionStatistic(
-		{ params }: Request<GetCompetitionStatisticDto, {}, {}>,
+		{ params }: Request<GetCompetitionStatisticDto, Record<string, unknown>, Record<string, unknown>>,
 		res: Response,
 		next: NextFunction,
 	): Promise<void | Error> {
@@ -46,7 +46,7 @@ export class StatisticController extends BaseController implements IStatisticCon
 	}
 
 	async getUserStatistic(
-		{ params }: Request<GetCompetitionStatisticDto, {}, {}>,
+		{ params }: Request<GetCompetitionStatisticDto, Record<string, unknown>, Record<string, unknown>>,
 		res: Response,
 		next: NextFunction,
 	): Promise<void | Error> {

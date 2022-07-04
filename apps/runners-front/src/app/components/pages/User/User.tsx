@@ -8,8 +8,7 @@ import {
 	getTempFromSec,
 	getTimeFromMilliseconds,
 } from '../../../common/date';
-import { IUserStatistic } from '@runners/shared/interfaces';
-import { IUser } from '../../../features/user/user.interface';
+import { IUser, IUserStatistic } from '@runners/shared/interfaces';
 import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
 
 export const User = () => {

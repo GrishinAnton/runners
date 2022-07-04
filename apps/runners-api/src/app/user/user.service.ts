@@ -7,6 +7,7 @@ import { User } from './user.entity';
 import { IUserService } from './user.service.interface';
 import { IUserRepository, IUserSort } from './user.repositoty.interface';
 
+
 @injectable()
 export class UserService implements IUserService {
 	constructor(@inject(TYPES.UserRepository) private userRepository: IUserRepository) {}

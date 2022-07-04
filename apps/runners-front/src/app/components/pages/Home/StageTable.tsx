@@ -3,13 +3,13 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { getAge, getTempFromSec, getTimeFromMilliseconds } from '../../../common/date';
 import {
-	EGender,
 	IDistanceByStageId,
 	IDistanceGender,
-} from '../../../features/distance/distance.interfasce';
+} from '../../../features/distance/distance.interfaces';
 import { ERoutes } from '../../../routes/config';
 import { NavLink } from 'react-router-dom';
 import { StyledTableCell, StyledTablStageRow } from '../../layouts/Table/Layout/Table';
+import { UserGender } from '@prisma/client';
 
 interface IProps {
 	stageId: string;
@@ -29,8 +29,8 @@ export const StageTable: React.FC<IProps> = ({ stageId }) => {
 		{
 			select: (data) => {
 				const genderData: IDistanceGender = {
-					[EGender.MALE]: [],
-					[EGender.FEMALE]: [],
+					[UserGender.MALE]: [],
+					[UserGender.FEMALE]: [],
 				};
 
 				data.forEach((distance) => {
@@ -56,7 +56,7 @@ export const StageTable: React.FC<IProps> = ({ stageId }) => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{distanceData[EGender.MALE].map((row, index: number) => (
+					{distanceData[UserGender.MALE].map((row, index: number) => (
 						<StyledTablStageRow key={index}>
 							<StyledTableCell>
 								<NavLink
@@ -80,7 +80,7 @@ export const StageTable: React.FC<IProps> = ({ stageId }) => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{distanceData[EGender.FEMALE].map((row, index: number) => (
+					{distanceData[UserGender.FEMALE].map((row, index: number) => (
 						<StyledTablStageRow key={index}>
 							<StyledTableCell>
 								<NavLink

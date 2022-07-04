@@ -1,7 +1,7 @@
-import { UserModel } from '@prisma/client';
+import { UserGender, UserModel } from '@prisma/client';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { ECollect, FileChanker } from '../common/fileReader/fileChanker.service';
+import { FileChanker } from '../common/fileReader/fileChanker.service';
 import { FileReaderService } from '../common/fileReader/fileReader.service';
 import { DistanceService } from '../distance/distance.service';
 import { DistanceCreateDto } from '../distance/dto/distance-create.dto';
@@ -28,16 +28,16 @@ export class RaceService implements IRaceService {
 		const data = this.fileReaderService.getData(file);
 		const collection = new FileChanker(data);
 		const collectionUsers = collection.getChankData();
-		const collectionUsersMan = collectionUsers[ECollect.MALE];
-		const collectionUsersWomen = collectionUsers[ECollect.FEMALE];
+		const collectionUsersMan = collectionUsers[UserGender.MALE];
+		const collectionUsersWomen = collectionUsers[UserGender.FEMALE];
 
-		await this.createDistance(collectionUsersMan, ECollect.MALE, date, distance, stageId);
-		await this.createDistance(collectionUsersWomen, ECollect.FEMALE, date, distance, stageId);
+		await this.createDistance(collectionUsersMan, UserGender.MALE, date, distance, stageId);
+		await this.createDistance(collectionUsersWomen, UserGender.FEMALE, date, distance, stageId);
 	}
 
 	private async createDistance(
 		users: unknown[][],
-		gender: ECollect,
+		gender: UserGender,
 		date: RaceCreateFromFileDto['date'],
 		distance: RaceCreateFromFileDto['distance'],
 		stageId: RaceCreateFromFileDto['stageId'],

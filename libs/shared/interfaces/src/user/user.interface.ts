@@ -1,6 +1,7 @@
 import { UserGender } from "@prisma/client";
 
-export class UserCreateDto {
+export interface IUser {
+	id: number;
 	name: string;
 	surname: string;
 	birthday: string;

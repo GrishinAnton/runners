@@ -1,9 +1,11 @@
+import { UserGender } from "@prisma/client";
+
 export class User {
 	constructor(
 		private _name: string,
 		private _surname: string,
 		private _birthday: string,
-		private _gender: string,
+		private _gender: UserGender,
 	) {}
 
 	get name(): string {
@@ -30,11 +32,11 @@ export class User {
 		this._birthday = value;
 	}
 
-	get gender(): string {
+	get gender(): UserGender {
 		return this._gender;
 	}
 
-	set gender(value: string) {
+	set gender(value: UserGender) {
 		this._gender = value;
 	}
 }

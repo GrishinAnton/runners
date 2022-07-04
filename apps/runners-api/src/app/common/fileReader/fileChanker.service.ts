@@ -1,20 +1,15 @@
-import { User } from '../../user/user.entity';
+import { UserGender } from '@prisma/client';
 import { DateGenerator } from '../date';
 import { IFileReaderRows } from './fileReader.service';
 
 interface IFileChanker {
 	chanks: unknown[][][];
-	collect: Record<ECollect, unknown[][]>;
-}
-
-export enum ECollect {
-	MALE = 'male',
-	FEMALE = 'female',
+	collect: Record<UserGender, unknown[][]>;
 }
 
 const defaultCollect = {
-	[ECollect.MALE]: [],
-	[ECollect.FEMALE]: [],
+	[UserGender.MALE]: [],
+	[UserGender.FEMALE]: [],
 };
 
 export class FileChanker {
@@ -56,10 +51,10 @@ export class FileChanker {
 	private collect(): void {
 		this.clearedChanks.forEach((chank, index) => {
 			if (index === 1) {
-				this.collectObj[ECollect.MALE] = chank.slice(1, chank.length);
+				this.collectObj[UserGender.MALE] = chank.slice(1, chank.length);
 			}
 			if (index === 3) {
-				this.collectObj[ECollect.FEMALE] = chank.slice(1, chank.length - 1);
+				this.collectObj[UserGender.FEMALE] = chank.slice(1, chank.length - 1);
 			}
 		});
 	}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Table, TableHead, TableRow, TableBody, Box } from '@mui/material';
 import { ESortType, SortButtonForTable } from '../../ui/SortButtonForTable/SortButtonForTable';
-import { IUser, IUserSort } from '../../../features/user/user.interface';
+import { IUserSort } from '../../../features/user/user.interface';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { UserSort } from '../../../features/user/sort.entity';
@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 import { ERoutes } from '../../../routes/config';
 import { getBirthdayFormat } from '../../../common/date';
 import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
-import { ICompetitionStatistic } from '@runners/shared/interfaces';
+import { ICompetitionStatistic, IUser } from '@runners/shared/interfaces';
 
 const sortEntity = new UserSort(ESortType.Asc);
 

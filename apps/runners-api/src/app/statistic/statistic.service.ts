@@ -2,11 +2,8 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '../../types';
 import { IStatisticService } from './statistic.service.interface';
 import 'reflect-metadata';
-import {
-	ICompetitionStatistic,
-	IStatisticRepository,
-	IUserStatistic,
-} from './statistic.repository.interface';
+import { IStatisticRepository } from './statistic.repository.interface';
+import {ICompetitionStatistic, IUserStatistic} from '@runners/shared/interfaces'
 
 @injectable()
 export class StatisticService implements IStatisticService {

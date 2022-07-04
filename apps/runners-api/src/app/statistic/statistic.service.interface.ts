@@ -1,4 +1,4 @@
-import { ICompetitionStatistic, IUserStatistic } from './statistic.repository.interface';
+import {ICompetitionStatistic, IUserStatistic} from '@runners/shared/interfaces'
 
 export interface IStatisticService {
 	getCompetitionStatistic: (competitionId: number) => Promise<ICompetitionStatistic>;

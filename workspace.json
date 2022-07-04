@@ -2,6 +2,58 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "birthday-bot-api": {
+      "root": "apps/birthday-bot-api",
+      "sourceRoot": "apps/birthday-bot-api/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:webpack",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/birthday-bot-api",
+            "main": "apps/birthday-bot-api/src/main.ts",
+            "tsConfig": "apps/birthday-bot-api/tsconfig.app.json",
+            "assets": ["apps/birthday-bot-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/birthday-bot-api/src/environments/environment.ts",
+                  "with": "apps/birthday-bot-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:node",
+          "options": {
+            "buildTarget": "birthday-bot-api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/birthday-bot-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/birthday-bot-api"],
+          "options": {
+            "jestConfig": "apps/birthday-bot-api/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "models": {
       "root": "libs/models",
       "sourceRoot": "libs/models/src",

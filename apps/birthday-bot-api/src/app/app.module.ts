@@ -1,20 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { ConfigModule } from '@nestjs/config';
-import { EchoUpdate } from './echo/echo.update';
+import { GreeterModule } from './birthdayBot/birthday.module';
+import { sessionMiddleware } from './middleware/session.middleware';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
-    TelegrafModule.forRoot({
-      token: process.env.TELEGRAM_TOKEN,
-      include: [EchoUpdate],
+    TelegrafModule.forRootAsync({
+      useFactory: () => ({
+        token: process.env.TELEGRAM_TOKEN,
+        middlewares: [sessionMiddleware],
+        include: [GreeterModule],
+      })
+      
     }),
-    EchoUpdate
+    GreeterModule
   ],
-  providers: [],
 })
 export class AppModule {}
 

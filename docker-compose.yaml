@@ -3,14 +3,26 @@ version: '3.1'
 
 services:
 
-  db:
+  db-runners-api:
     image: postgres
-    container_name: backend
+    container_name: runners-api
     restart: always
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db-runners-api
+  db-birthday-bot:
+    image: postgres
+    container_name: birthday-bot
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db-birthday-bot
 
   adminer:
     image: adminer

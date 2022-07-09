@@ -36,6 +36,14 @@
             "buildTarget": "birthday-bot-api:build"
           }
         },
+        "gen-client": {
+          "executor": "@nrwl/workspace:run-commands",
+          "outputs": [],
+          "options": {
+            "command": "npx prisma generate --schema ./src/prisma/schema.prisma",
+            "cwd": "apps/birthday-bot-api"
+          }
+        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],

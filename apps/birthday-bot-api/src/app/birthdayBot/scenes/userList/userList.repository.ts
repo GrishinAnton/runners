@@ -1,21 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { seedUsersList } from '../../../common/seed/seed';
 import { PrismaService } from '../../../database/prisma.service';
-import { UserListModel } from '@prisma/birthday-api'
+import { DEFAULT_TAKE } from '../constants';
+import { IUserRepository } from './user.repository.interface';
 
 @Injectable()
-export class UserRepository {
+export class UserRepository implements IUserRepository {
     constructor(private readonly prismaService: PrismaService) { }
 
-    async getUsers(): Promise<UserListModel[] | null> {
+    async getUsers(skip: number) {
         // await this.prismaService.userListModel.createMany({
-        //     data: [
-        //         {
-        //             name: 'Anton',
-        //             surname: 'Grishin',
-        //             birthday: '2022-07-10T04:22:13.069Z'
-        //         }
-        //     ]
+        //     data: seedUsersList(10)
         // })
-        return await this.prismaService.userListModel.findMany({})
+        // await this.prismaService.userListModel.deleteMany()
+        
+        const userList = await this.prismaService.userListModel.findMany({
+            take: DEFAULT_TAKE,
+            skip: skip,
+            
+        })
+        const count = await this.prismaService.userListModel.count()
+
+        return {
+            count,
+            elements: userList
+        }
     }
 }

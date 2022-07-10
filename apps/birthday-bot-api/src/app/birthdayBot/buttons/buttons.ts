@@ -5,7 +5,8 @@ export enum EButtons {
     AddCongratulation = '📢 Добавить поздравление',
     Next = 'Далее',
     Exit = 'Выход',
-    Start = 'Главное меню'
+    Start = 'Главное меню',
+    CreateUser = 'Создать пользователя'
   }
   
   export const MainMenuKeyboard = [
@@ -13,6 +14,3 @@ export enum EButtons {
     [EButtons.Settings, EButtons.AddCongratulation], 
   ]
 
-  export const UserListMenuKeyboard = [
-    [EButtons.Next, EButtons.Exit]
-  ]

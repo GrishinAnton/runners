@@ -1,18 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { UserListModel } from '@prisma/birthday-api'
+import { IUserService } from './user.service.interface';
 import { UserRepository } from './userList.repository';
 
 @Injectable()
-export class UserService {
+export class UserService implements IUserService {
 
-    constructor(private readonly userRepository: UserRepository) { }
+    constructor(private readonly userRepository: UserRepository) {}
 
-    async getUsers(): Promise<UserListModel[] | null> {
-        const existedUsers = await this.userRepository.getUsers()
-        if(!existedUsers){
-            return null
-        }
-
-        return existedUsers
+    async getUsers(skip: number) {
+        return await this.userRepository.getUsers(skip)
     }
 }

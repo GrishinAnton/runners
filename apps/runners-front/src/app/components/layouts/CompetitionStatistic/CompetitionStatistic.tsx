@@ -22,8 +22,8 @@ export const CompetitionStatistic: React.FC<IProp> = ({ statistic }) => {
 			</ListItem>
 			<ListItem>
 				<ListItemText
-					primary={`Возраст от ${getAge(String(statistic.ageCampare.youngest))} до ${getAge(
-						String(statistic.ageCampare.oldest),
+					primary={`Возраст от ${getAge(statistic.ageCampare.youngest)} до ${getAge(
+						statistic.ageCampare.oldest,
 					)}`}
 				/>
 			</ListItem>

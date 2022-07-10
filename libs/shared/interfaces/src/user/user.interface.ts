@@ -4,6 +4,6 @@ export interface IUser {
 	id: number;
 	name: string;
 	surname: string;
-	birthday: string;
+	birthday: Date;
 	gender: UserGender;
 }

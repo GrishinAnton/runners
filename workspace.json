@@ -36,6 +36,14 @@
             "buildTarget": "birthday-bot-api:build"
           }
         },
+        "migrate": {
+          "executor": "@nrwl/workspace:run-commands",
+          "outputs": [],
+          "options": {
+            "command": "npx prisma migrate dev --name init --schema ./src/prisma/schema.prisma",
+            "cwd": "apps/birthday-bot-api"
+          }
+        },
         "gen-client": {
           "executor": "@nrwl/workspace:run-commands",
           "outputs": [],
@@ -89,6 +97,29 @@
     "runners-api": "apps/runners-api",
     "runners-front": "apps/runners-front",
     "runners-front-e2e": "apps/runners-front-e2e",
+    "shared-common": {
+      "root": "libs/shared/common",
+      "sourceRoot": "libs/shared/common/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/shared/common/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/common"],
+          "options": {
+            "jestConfig": "libs/shared/common/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "shared-interfaces": {
       "root": "libs/shared/interfaces",
       "sourceRoot": "libs/shared/interfaces/src",

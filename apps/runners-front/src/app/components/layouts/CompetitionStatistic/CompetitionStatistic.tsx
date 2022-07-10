@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemText } from '@mui/material';
-import { getAge, getTempFromSec, getTimeFromMilliseconds } from '../../../common/date';
+import { getAge, getTempFromSec, getTimeFromMilliseconds } from '@runners/shared/common';
 import { ICompetitionStatistic } from '@runners/shared/interfaces';
 
 interface IProp {

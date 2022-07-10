@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { BirthdayUpdate } from './birthday.update';
-import { UserListScene } from './scenes/userList.scene';
-
+import { UserListModule } from './scenes/userList/userList.module';
 
 @Module({
-  providers: [BirthdayUpdate, UserListScene],
+  imports: [UserListModule],
+  providers: [BirthdayUpdate],
 })
-export class GreeterModule {}
+export class BirthdayModule {}

@@ -8,7 +8,7 @@ import { UserSort } from '../../../features/user/sort.entity';
 import { CompetitionStatistic } from '../../layouts/CompetitionStatistic/CompetitionStatistic';
 import { NavLink } from 'react-router-dom';
 import { ERoutes } from '../../../routes/config';
-import { getBirthdayFormat } from '../../../common/date';
+import { getBirthdayFormat } from '@runners/shared/common';
 import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
 import { ICompetitionStatistic, IUser } from '@runners/shared/interfaces';
 

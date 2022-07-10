@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { ConfigModule } from '@nestjs/config';
-import { GreeterModule } from './birthdayBot/birthday.module';
+import { BirthdayModule } from './birthdayBot/birthday.module';
 import { sessionMiddleware } from './middleware/session.middleware';
 
 @Module({
@@ -13,11 +13,11 @@ import { sessionMiddleware } from './middleware/session.middleware';
       useFactory: () => ({
         token: process.env.TELEGRAM_TOKEN,
         middlewares: [sessionMiddleware],
-        include: [GreeterModule],
+        include: [BirthdayModule],
       })
       
     }),
-    GreeterModule
+    BirthdayModule
   ],
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { Table, TableHead, TableRow, TableBody, Box } from '@mui/material';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { getAge, getTempFromSec, getTimeFromMilliseconds } from '../../../common/date';
+import { getAge, getTempFromSec, getTimeFromMilliseconds } from '@runners/shared/common';
 import {
 	IDistanceByStageId,
 	IDistanceGender,

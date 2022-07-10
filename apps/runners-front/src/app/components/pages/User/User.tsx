@@ -7,7 +7,7 @@ import {
 	getBirthdayFormat,
 	getTempFromSec,
 	getTimeFromMilliseconds,
-} from '../../../common/date';
+} from '@runners/shared/common';
 import { IUser, IUserStatistic } from '@runners/shared/interfaces';
 import { StyledTableCell, StyledTableRow } from '../../layouts/Table/Layout/Table';
 

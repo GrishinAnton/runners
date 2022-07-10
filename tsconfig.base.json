@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@runners/models": ["libs/models/src/index.ts"],
+      "@runners/shared/common": ["libs/shared/common/src/index.ts"],
       "@runners/shared/interfaces": ["libs/shared/interfaces/src/index.ts"]
     }
   },
